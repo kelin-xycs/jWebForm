@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DropDownList</title>
+    <link rel="stylesheet" type="text/css" href="jWebForm.css" />
+    <script type="text/javascript" src="jWebForm.js"></script>
+    <script type="text/javascript">
+
+        function btnEditWidth_Click()
+        {
+            var ddlPerson = $j("ddlPerson");
+
+            var width = document.getElementById("txtWidth").value;
+
+            ddlPerson.Width(width);
+        }
+
+        function btnEditHeight_Click()
+        {
+            var ddlPerson = $j("ddlPerson");
+
+            var height = document.getElementById("txtHeight").value;
+
+            ddlPerson.Height(height);
+        }
+
+        $j.Page_Load = function Page_Load()
+        {
+
+            var ddlPerson = $j("ddlPerson");
+
+            ddlPerson.DataBind(
+                [
+                    "&nbsp;",
+                    "小明",
+                    "小刚",
+                    "小红"
+                ]
+                );
+        }
+
+    </script>
+</head>
+<body>
+
+    <input type="text" id="txtWidth" value="500px" />
+    <input type="button" value="修改 下拉框 宽度" onclick="btnEditWidth_Click(); "/>
+
+    <br />
+
+    <input type="text" id="txtHeight" value="100px" />
+    <input type="button" value="修改 下拉框 高度" onclick="btnEditHeight_Click();" />
+
+    <br /><br />
+
+    <j:dropdownlist id="ddlPerson" Width="300px" Height="30px"></j:dropdownlist>
+
+</body>
+</html>
