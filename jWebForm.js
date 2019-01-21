@@ -194,6 +194,8 @@ jwf$DropDownList.prototype.DataBind = function jwf$DropDownList$DataBind(dataSou
     }
 }
 
+// 因为 document  document.documentElement  document.body 的 getElementsByTagNameNS() 方法不起作用，
+// 返回 空集合，所以只能递归遍历来查找 jWebForm（j:） 元素。
 function jwf$GetJwfElements(elemts, elemt) {
     var s = elemt.nodeName.substring(0, 2);
     if (elemt.nodeName.substring(0, 2) == "J:") {
