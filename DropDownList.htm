@@ -15,6 +15,15 @@
             ddlPerson.Width(width);
         }
 
+        function btnShowWidth_Click()
+        {
+            var ddlPerson = $j("ddlPerson");
+
+            var width = ddlPerson.Width();
+
+            alert(width);
+        }
+
         function btnEditHeight_Click()
         {
             var ddlPerson = $j("ddlPerson");
@@ -22,6 +31,15 @@
             var height = document.getElementById("txtHeight").value;
 
             ddlPerson.Height(height);
+        }
+
+        function btnShowHeight_Click()
+        {
+            var ddlPerson = $j("ddlPerson");
+
+            var height = ddlPerson.Height();
+
+            alert(height);
         }
 
         $j.Page_Load = function Page_Load()
@@ -45,11 +63,13 @@
 
     <input type="text" id="txtWidth" value="500px" />
     <input type="button" value="修改 下拉框 宽度" onclick="btnEditWidth_Click(); "/>
+    <input type="button" value="显示 下拉框 宽度" onclick="btnShowWidth_Click(); " />
 
     <br />
 
     <input type="text" id="txtHeight" value="100px" />
     <input type="button" value="修改 下拉框 高度" onclick="btnEditHeight_Click();" />
+    <input type="button" value="显示 下拉框 高度" onclick="btnShowHeight_Click();" />
 
     <br /><br />
 

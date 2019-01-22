@@ -139,6 +139,8 @@ $j.DropDownList = jwf$DropDownList;
 
 jwf$DropDownList.prototype.Width = function jwf$DropDownList$Width(width)
 {
+    if (!width)
+        return this.width;
 
     this.width = parseInt(width.replace("px", ""));
 
@@ -149,6 +151,9 @@ jwf$DropDownList.prototype.Width = function jwf$DropDownList$Width(width)
 
 jwf$DropDownList.prototype.Height = function jwf$DropDownList$Height(height)
 {
+    if (!height)
+        return this.height;
+
     this.height = parseInt(height.replace("px", ""));
 
     this.elemt.style.height = this.height + "px";
