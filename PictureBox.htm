@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PictureBox</title>
+    <link rel="stylesheet" type="text/css" href="jWebForm.css" />
+    <script type="text/javascript" src="jWebForm.js"></script>
+    <script type="text/javascript">
+
+
+        $j.Page_Load = function Page_Load()
+        {
+
+            var picBox1 = $j("picBox1");
+
+            picBox1.LoadImages(
+                [
+                    "images/美女1-1.jpg",
+                    "images/美女1-2.jpg",
+                    "images/美女1-3.jpg"
+                ],
+
+                function ()
+                {
+                    picBox1.Play();
+                }
+              );
+        }
+
+    </script>
+</head>
+<body>
+
+    每 5 秒 播放一张图片
+
+    <br /><br />
+
+    <j:PictureBox id="picBox1" ></j:PictureBox>
+
+</body>
+</html>

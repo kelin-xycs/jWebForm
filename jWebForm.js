@@ -31,28 +31,43 @@ function jwf$InitControls() {
 
     jwf$GetJwfElements(jelemts, document.body);
 
-    for (i = 0; i < jelemts.length; i++) {
+    for (i = 0; i < jelemts.length; i++)
+    {
         var jelemt = jelemts[i];
 
         var ctrl = jwf$GetControl(jelemt);
 
-        jelemt.parentNode.insertBefore(ctrl.elemt, jelemt);
+        var id = jelemt.getAttribute("id");
 
-        jwf$Controls[jelemt.getAttribute("id")] = ctrl;
+        if (!id)
+        {
+            throw "必须为 jWebForm（j:） Control 指定 id 。";
+        }
+
+        ctrl.elemt.id = id;
+
+        jelemt.parentNode.replaceChild(ctrl.elemt, jelemt);
+
+        jwf$Controls[id] = ctrl;
     }
 }
 
-function jwf$GetControl(jelemt) {
-    if (jelemt.nodeName == "J:DROPDOWNLIST") {
+function jwf$GetControl(jelemt)
+{
+    if (jelemt.nodeName == "J:DROPDOWNLIST")
+    {
         return new jwf$DropDownList(jelemt);
+    }
+    else if (jelemt.nodeName == "J:PICTUREBOX")
+    {
+        return new jwf$PictureBox(jelemt);
     }
 
     throw "无效的 nodeName ：\"" + jelemt.nodeName + "\" 。";
 }
 
-function jwf$DropDownList( jelemt ) {
-
-
+function jwf$DropDownList(jelemt)
+{
     var width = jelemt.getAttribute("Width");
     var height = jelemt.getAttribute("Height");
 
@@ -72,7 +87,6 @@ function jwf$DropDownList( jelemt ) {
     elemt.style.display = "inner-block";
     elemt.style.width = this.width + "px";
     elemt.style.height = this.height + "px";
-    //elemt.style.backgroundColor = "red";
 
     this.elemt = elemt;
     elemt.jwfObj = this;
@@ -103,19 +117,15 @@ function jwf$DropDownList( jelemt ) {
     text.jwfObj = this;
 
 
-
-
     var drop = document.createElement("div");
 
     drop.style.display = "none";
     drop.style.width = text.style.width;
-    //drop.style.height = "300px";
+   
     drop.style.border = "solid 1px gray";
     drop.style.position = "relative";
-    //drop.style.top = elemt.style.height;
 
     elemt.appendChild(drop);
-
 
     this.drop = drop;
     drop.jwfObj = this;
@@ -134,8 +144,6 @@ function jwf$DropDownList( jelemt ) {
 }
 
 $j.DropDownList = jwf$DropDownList;
-
-//jwf$DropDownList.prototype.OnFocus = null;
 
 jwf$DropDownList.prototype.Width = function jwf$DropDownList$Width(width)
 {
@@ -160,11 +168,12 @@ jwf$DropDownList.prototype.Height = function jwf$DropDownList$Height(height)
     this.text.style.height = (this.height - 2) + "px";
 }
 
-jwf$DropDownList.prototype.DataBind = function jwf$DropDownList$DataBind(dataSource) {
+jwf$DropDownList.prototype.DataBind = function jwf$DropDownList$DataBind(dataSource)
+{
     var drop = this.drop;
-    //var text = this.text;
-
-    for (i = 0; i < dataSource.length; i++) {
+    
+    for (i = 0; i < dataSource.length; i++)
+    {
         var item = document.createElement("div");
         item.style.display = "inner-block";
         item.className = "jwf_DropDownListItem";
@@ -191,7 +200,6 @@ jwf$DropDownList.prototype.DataBind = function jwf$DropDownList$DataBind(dataSou
                         drop.style.display = "none";
                     },
                     100);
-                //drop.style.display = "none";
             }
         );
 
@@ -215,5 +223,187 @@ function jwf$GetJwfElements(elemts, elemt) {
 
         jwf$GetJwfElements(elemts, childNode);
     }
+
+}
+
+function jwf$PictureBox(jelemt)
+{
+
+    this.playInterval = 5000;
+    this.stepInterval = 100;
+
+    var width = jelemt.getAttribute("Width");
+    var height = jelemt.getAttribute("Height");
+
+    if (width)
+        this.width = parseInt(width.replace("px", ""));
+    else
+        this.width = 200;
+
+    if (height)
+        this.height = parseInt(height.replace("px", ""));
+    else
+        this.height = 300;
+
+
+    var elemt = document.createElement("div");
+
+    elemt.style.display = "inner-block";
+    elemt.style.width = this.width + "px";
+    elemt.style.height = this.height + "px";
+    elemt.style.border = "solid 1px lightblue";
+
+
+    this.elemt = elemt;
+    elemt.jwfObj = this;
+
+    var hidden = document.createElement("div");
+    hidden.style.display = "none";
+
+    this.hidden = hidden;
+
+    elemt.appendChild(hidden);
+
+    var imgDiv = document.createElement("div");
+
+    imgDiv.style.width = "100%";
+    imgDiv.style.height = "100%";
+    imgDiv.style.overflow = "hidden";
+
+    this.imgDiv = imgDiv;
+
+    elemt.appendChild(imgDiv);
+
+}
+
+$j.PictureBox = jwf$PictureBox;
+
+jwf$PictureBox.prototype.Width = function jwf$PictureBox$Width(width) {
+    if (!width)
+        return this.width;
+
+    this.width = parseInt(width.replace("px", ""));
+
+    this.elemt.style.width = this.width + "px";
+}
+
+jwf$PictureBox.prototype.Height = function jwf$PictureBox$Height(height) {
+    if (!height)
+        return this.height;
+
+    this.height = parseInt(height.replace("px", ""));
+
+    this.elemt.style.height = this.height + "px";
+}
+
+jwf$PictureBox.prototype.LoadImages = function jwf$PictureBox$LoadImages(urlList, callback)
+{
+    
+    this.imgList = [];
+
+    this.imgLoadCount = 0;
+
+    this.imgCount = urlList.length;
+
+
+    for (i=0; i<urlList.length; i++)
+    {
+        var url = urlList[i];
+        var img = document.createElement("img");
+
+        img.style.width = this.width + "px";
+        img.style.height = this.height + "px";
+        
+        img.src = url;
+
+        img.addEventListener("load", function jwf$PictureBox$PlayImageOnLoad(e)
+        {
+            var img = e.srcElement;
+            var picBox = img.jwfObj;
+
+            picBox.imgLoadCount++;
+
+            if (picBox.imgLoadCount == picBox.imgCount)
+            {
+                picBox.imgDiv.appendChild(picBox.imgList[0]);
+
+                callback(picBox);
+            }
+        });
+
+        img.jwfObj = this;
+
+        if (i > 0)
+        {
+            img.style.display = "none";
+        }
+
+        this.imgList[this.imgList.length] = img;
+        this.hidden.appendChild(img);
+    }
+}
+
+jwf$PictureBox.prototype.Play = function jwf$PictureBox$Play()
+{
+    this.imgIndex = 1;
+
+    window.setTimeout(jwf$PictureBox$PlayOneImage, this.playInterval, this);   
+}
+
+function jwf$PictureBox$PlayOneImage(picBox)
+{
+    var imgDiv = picBox.imgDiv;
+
+    var img = picBox.imgList[picBox.imgIndex];
+
+    img.style.marginTop = (picBox.height * -1) + "px";
+
+    var imgOld = picBox.imgDiv.childNodes[0];
+
+    imgDiv.insertBefore(img, imgOld);
+    
+    img.style.display = "";
+
+    picBox.stepCount = 0;
+
+    picBox.playOneImageStepHandle = window.setInterval(jwf$PictureBox$PlayOneImageStep, picBox.stepInterval, picBox);
+}
+
+function jwf$PictureBox$PlayOneImageStep(picBox)
+{
+    var imgDiv = picBox.imgDiv;
+
+    var top = picBox.height * (1 - picBox.stepCount / 10);
+
+    if (top < 0)
+        top = 0;
+
+    var img = imgDiv.childNodes[0];
+    var imgOld = imgDiv.childNodes[1];
+
+    img.style.marginTop = (top * -1) + "px";
+
+    if (top == 0)
+    {
+        window.clearInterval(picBox.playOneImageStepHandle);
+
+        imgDiv.removeChild(imgOld);
+        imgOld.style.display = "none";
+
+        picBox.stepCount = 0;
+
+        picBox.imgIndex++;
+        
+        if (picBox.imgIndex == picBox.imgCount)
+        {
+            picBox.imgIndex = 0;
+        }
+
+        window.setTimeout(jwf$PictureBox$PlayOneImage, picBox.playInterval, picBox);
+
+        return;
+    }
+
+    picBox.stepCount++;
 
 }
