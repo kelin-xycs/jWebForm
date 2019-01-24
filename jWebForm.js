@@ -285,22 +285,26 @@ function jwf$PictureBox(jelemt)
 
 $j.PictureBox = jwf$PictureBox;
 
-jwf$PictureBox.prototype.Width = function jwf$PictureBox$Width(width) {
+jwf$PictureBox.prototype.Width = function jwf$PictureBox$Width(width)
+{
     if (!width)
         return this.width;
 
-    this.width = parseInt(width.replace("px", ""));
+    throw "jWebForm Error: 暂不支持 设置 Width 。"
+    //this.width = parseInt(width.replace("px", ""));
 
-    this.elemt.style.width = this.width + "px";
+    //this.elemt.style.width = this.width + "px";
 }
 
-jwf$PictureBox.prototype.Height = function jwf$PictureBox$Height(height) {
+jwf$PictureBox.prototype.Height = function jwf$PictureBox$Height(height)
+{
     if (!height)
         return this.height;
 
-    this.height = parseInt(height.replace("px", ""));
+    throw "jWebForm Error: 暂不支持 设置 Height 。"
+    //this.height = parseInt(height.replace("px", ""));
 
-    this.elemt.style.height = this.height + "px";
+    //this.elemt.style.height = this.height + "px";
 }
 
 jwf$PictureBox.prototype.LoadImages = function jwf$PictureBox$LoadImages(urlList, callback)
