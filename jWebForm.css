@@ -6,3 +6,15 @@
 {
     background-color: lightgray;
 }
+
+.jwf_Button
+{
+    background-color: lightgray;
+    border: solid 1px gray;
+    cursor:default
+}
+.jwf_Button:hover
+{
+    background-color: lightblue;
+    
+}

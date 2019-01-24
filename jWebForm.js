@@ -39,16 +39,16 @@ function jwf$InitControls() {
 
         var id = jelemt.getAttribute("id");
 
-        if (!id)
+        if (id)
         {
-            throw "必须为 jWebForm（j:） Control 指定 id 。";
-        }
+            ctrl.id = id;
+            ctrl.elemt.id = id;
 
-        ctrl.elemt.id = id;
+            jwf$Controls[id] = ctrl;
+        }
 
         jelemt.parentNode.replaceChild(ctrl.elemt, jelemt);
 
-        jwf$Controls[id] = ctrl;
     }
 }
 
@@ -61,6 +61,10 @@ function jwf$GetControl(jelemt)
     else if (jelemt.nodeName == "J:PICTUREBOX")
     {
         return new jwf$PictureBox(jelemt);
+    }
+    else if (jelemt.nodeName == "J:BUTTON")
+    {
+        return new jwf$Button(jelemt);
     }
 
     throw "无效的 nodeName ：\"" + jelemt.nodeName + "\" 。";
@@ -84,7 +88,7 @@ function jwf$DropDownList(jelemt)
 
     var elemt = document.createElement("div");
 
-    elemt.style.display = "inner-block";
+    elemt.style.display = "inline-block";
     elemt.style.width = this.width + "px";
     elemt.style.height = this.height + "px";
 
@@ -123,6 +127,7 @@ function jwf$DropDownList(jelemt)
     drop.style.width = text.style.width;
    
     drop.style.border = "solid 1px gray";
+    drop.style.backgroundColor = "white";
     drop.style.position = "relative";
 
     elemt.appendChild(drop);
@@ -175,20 +180,22 @@ jwf$DropDownList.prototype.DataBind = function jwf$DropDownList$DataBind(dataSou
     for (i = 0; i < dataSource.length; i++)
     {
         var item = document.createElement("div");
-        item.style.display = "inner-block";
+        
         item.className = "jwf_DropDownListItem";
         item.innerHTML = dataSource[i];
 
         item.jwfObj = this;
 
         item.addEventListener("mousedown",
-            function jwf$DropDownList$ItemMouseDown(e) {
+            function jwf$DropDownList$ItemMouseDown(e)
+            {
                 item.jwfObj.mousedownSelf = true;
             }
         );
 
         item.addEventListener("click",
-            function jwf$DropDownList$ItemClick(e) {
+            function jwf$DropDownList$ItemClick(e)
+            {
                 var item = e.srcElement;
                 var drop = item.jwfObj.drop;
                 var text = item.jwfObj.text;
@@ -248,7 +255,7 @@ function jwf$PictureBox(jelemt)
 
     var elemt = document.createElement("div");
 
-    elemt.style.display = "inner-block";
+    elemt.style.display = "inline-block";
     elemt.style.width = this.width + "px";
     elemt.style.height = this.height + "px";
     elemt.style.border = "solid 1px lightblue";
@@ -406,4 +413,100 @@ function jwf$PictureBox$PlayOneImageStep(picBox)
 
     picBox.stepCount++;
 
+}
+
+function jwf$Button(jelemt)
+{
+    var width = jelemt.getAttribute("Width");
+    var height = jelemt.getAttribute("Height");
+    var text = jelemt.getAttribute("Text");
+    var click = jelemt.getAttribute("OnClick");
+
+    if (width)
+        this.width = parseInt(width.replace("px", ""));
+    else
+        this.width = 200;
+
+    if (height)
+        this.height = parseInt(height.replace("px", ""));
+    else
+        this.height = 30;
+
+    if (text)
+        this.text = text;
+    else
+        this.text = "";
+
+    if (click)
+        this.click = click;
+
+
+    var elemt = document.createElement("div");
+
+    elemt.style.boxSizing = "border-box";
+    
+    elemt.style.width = this.width + "px";
+    elemt.style.height = this.height + "px";
+    
+    elemt.className = "jwf_Button";
+
+    elemt.style.display = "inline-flex";
+    elemt.style.justifyContent = "center";
+    elemt.style.alignItems = "center";
+
+    elemt.addEventListener("click", function jwf$Button$Click() {
+        var btn = elemt.jwfObj;
+
+        var handler;
+
+        if (typeof (btn.click) == "string") {
+            handler = window[btn.click];
+        }
+        else if (typeof (btn.click) == "function") {
+            handler = btn.click;
+        }
+
+        if (!handler) {
+            throw "jWebForm Error: \"" + btn.click + "\" 不是有效的 函数名 或 函数 。"
+        }
+
+        handler(btn);
+
+    });
+
+    this.elemt = elemt;
+    elemt.jwfObj = this;
+
+    var textDiv = document.createElement("div");
+    
+    this.textDiv = textDiv;
+
+    textDiv.style.width = "fit-content";
+
+    textDiv.innerHTML = this.text;
+
+    elemt.appendChild(textDiv);
+
+}
+
+$j.Button = jwf$Button;
+
+jwf$Button.prototype.Width = function jwf$Button$Width(width)
+{
+    if (!width)
+        return this.width;
+
+    this.width = parseInt(width.replace("px", ""));
+
+    this.elemt.style.width = this.width + "px";
+}
+
+jwf$Button.prototype.Height = function jwf$Button$Height(height)
+{
+    if (!height)
+        return this.height;
+
+    this.height = parseInt(height.replace("px", ""));
+
+    this.elemt.style.height = this.height + "px";
 }
