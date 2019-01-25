@@ -57,25 +57,9 @@ function jwf$GetJwfElements(elemts, elemt) {
         elemts[elemts.length] = elemt;
     }
 
-    //console.info(elemt.nodeName + " " + elemt.id + " " + elemt.childNodes.length);
-
     if (elemt.childNodes.length == 0)
         return;
 
-    //var childNode = elemt.childNodes[0];
-
-    //while (true)
-    //{
-    //    jwf$GetJwfElements(elemts, childNode);
-
-    //    childNode = childNode.nextSibling;
-
-    //    if (childNode == null)
-    //        break;
-    //}
-
-    //  这好像是 Chrome 的一个 Bug，当 循环 快结束时，在 body 层 的循环 的 i 又会变成比较小的值，如 2，
-    //  这样就会 无限循环
     for (var i = 0; i < elemt.childNodes.length; i++) {
         var childNode = elemt.childNodes[i];
 
@@ -141,7 +125,6 @@ function jwf$DropDownList(jelemt)
 
     var elemt = document.createElement("div");
 
-    //elemt.style.display = "inline-block";
     elemt.style.width = this.width + "px";
     elemt.style.height = this.height + "px";
 
