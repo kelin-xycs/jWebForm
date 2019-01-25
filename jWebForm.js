@@ -21,7 +21,7 @@ function jwf$AddEventHandler_Window_MouseDown(handler) {
     jwf$Window_MouseDown_Events[jwf$Window_MouseDown_Events.length] = handler;
 }
 function jwf$Window_MouseDown() {
-    for (i = 0; i < jwf$Window_MouseDown_Events.length; i++) {
+    for (var i = 0; i < jwf$Window_MouseDown_Events.length; i++) {
         jwf$Window_MouseDown_Events[i]();
     }
 }
@@ -31,7 +31,7 @@ function jwf$InitControls() {
 
     jwf$GetJwfElements(jelemts, document.body);
 
-    for (i = 0; i < jelemts.length; i++)
+    for (var i = 0; i < jelemts.length; i++)
     {
         var jelemt = jelemts[i];
 
@@ -41,15 +41,54 @@ function jwf$InitControls() {
 
         if (id)
         {
-            ctrl.id = id;
-            ctrl.elemt.id = id;
-
-            jwf$Controls[id] = ctrl;
+            jwf$RegiterControl(ctrl, id);
         }
 
         jelemt.parentNode.replaceChild(ctrl.elemt, jelemt);
 
     }
+}
+
+// 因为 document  document.documentElement  document.body 的 getElementsByTagNameNS() 方法不起作用，
+// 返回 空集合，所以只能递归遍历来查找 jWebForm（j:） 元素。
+function jwf$GetJwfElements(elemts, elemt) {
+    var s = elemt.nodeName.substring(0, 2);
+    if (elemt.nodeName.substring(0, 2) == "J:") {
+        elemts[elemts.length] = elemt;
+    }
+
+    //console.info(elemt.nodeName + " " + elemt.id + " " + elemt.childNodes.length);
+
+    if (elemt.childNodes.length == 0)
+        return;
+
+    //var childNode = elemt.childNodes[0];
+
+    //while (true)
+    //{
+    //    jwf$GetJwfElements(elemts, childNode);
+
+    //    childNode = childNode.nextSibling;
+
+    //    if (childNode == null)
+    //        break;
+    //}
+
+    //  这好像是 Chrome 的一个 Bug，当 循环 快结束时，在 body 层 的循环 的 i 又会变成比较小的值，如 2，
+    //  这样就会 无限循环
+    for (var i = 0; i < elemt.childNodes.length; i++) {
+        var childNode = elemt.childNodes[i];
+
+        jwf$GetJwfElements(elemts, childNode);
+    }
+}
+
+function jwf$RegiterControl(ctrl, id)
+{
+    ctrl.id = id;
+    ctrl.elemt.id = id;
+
+    jwf$Controls[id] = ctrl;
 }
 
 function jwf$GetControl(jelemt)
@@ -70,10 +109,24 @@ function jwf$GetControl(jelemt)
     throw "无效的 nodeName ：\"" + jelemt.nodeName + "\" 。";
 }
 
+function jwf$Control()
+{
+
+}
+
+jwf$Control.prototype.Element = function jwf$Control$Element()
+{
+    return this.elemt;
+}
+
 function jwf$DropDownList(jelemt)
 {
-    var width = jelemt.getAttribute("Width");
-    var height = jelemt.getAttribute("Height");
+
+    if (jelemt)
+    {
+        var width = jelemt.getAttribute("Width");
+        var height = jelemt.getAttribute("Height");
+    }
 
     if (width)
         this.width = parseInt(width.replace("px", ""));
@@ -88,7 +141,7 @@ function jwf$DropDownList(jelemt)
 
     var elemt = document.createElement("div");
 
-    elemt.style.display = "inline-block";
+    //elemt.style.display = "inline-block";
     elemt.style.width = this.width + "px";
     elemt.style.height = this.height + "px";
 
@@ -148,7 +201,19 @@ function jwf$DropDownList(jelemt)
     );
 }
 
-$j.DropDownList = jwf$DropDownList;
+$j.DropDownList = function jwf$Create$DropDownList(id)
+{
+    var ctrl = new jwf$DropDownList();
+
+    if (id)
+    {
+        jwf$RegiterControl(ctrl, id);
+    }
+
+    return ctrl;
+}
+
+jwf$DropDownList.prototype = new jwf$Control();
 
 jwf$DropDownList.prototype.Width = function jwf$DropDownList$Width(width)
 {
@@ -177,7 +242,7 @@ jwf$DropDownList.prototype.DataBind = function jwf$DropDownList$DataBind(dataSou
 {
     var drop = this.drop;
     
-    for (i = 0; i < dataSource.length; i++)
+    for (var i = 0; i < dataSource.length; i++)
     {
         var item = document.createElement("div");
         
@@ -214,33 +279,17 @@ jwf$DropDownList.prototype.DataBind = function jwf$DropDownList$DataBind(dataSou
     }
 }
 
-// 因为 document  document.documentElement  document.body 的 getElementsByTagNameNS() 方法不起作用，
-// 返回 空集合，所以只能递归遍历来查找 jWebForm（j:） 元素。
-function jwf$GetJwfElements(elemts, elemt) {
-    var s = elemt.nodeName.substring(0, 2);
-    if (elemt.nodeName.substring(0, 2) == "J:") {
-        elemts[elemts.length] = elemt;
-    }
-
-    if (elemt.childNodes.length == 0)
-        return;
-
-    for (i = 0; i < elemt.childNodes.length; i++) {
-        var childNode = elemt.childNodes[i];
-
-        jwf$GetJwfElements(elemts, childNode);
-    }
-
-}
-
 function jwf$PictureBox(jelemt)
 {
 
     this.playInterval = 5000;
     this.stepInterval = 100;
 
-    var width = jelemt.getAttribute("Width");
-    var height = jelemt.getAttribute("Height");
+    if (jelemt)
+    {
+        var width = jelemt.getAttribute("Width");
+        var height = jelemt.getAttribute("Height");
+    }
 
     if (width)
         this.width = parseInt(width.replace("px", ""));
@@ -283,7 +332,18 @@ function jwf$PictureBox(jelemt)
 
 }
 
-$j.PictureBox = jwf$PictureBox;
+$j.PictureBox = function jwf$Create$PictureBox(id)
+{
+    var ctrl = new jwf$PictureBox();
+
+    if (id) {
+        jwf$RegiterControl(ctrl, id);
+    }
+
+    return ctrl;
+}
+
+jwf$PictureBox.prototype = new jwf$Control();
 
 jwf$PictureBox.prototype.Width = function jwf$PictureBox$Width(width)
 {
@@ -317,7 +377,7 @@ jwf$PictureBox.prototype.LoadImages = function jwf$PictureBox$LoadImages(urlList
     this.imgCount = urlList.length;
 
 
-    for (i=0; i<urlList.length; i++)
+    for (var i=0; i<urlList.length; i++)
     {
         var url = urlList[i];
         var img = document.createElement("img");
@@ -421,10 +481,13 @@ function jwf$PictureBox$PlayOneImageStep(picBox)
 
 function jwf$Button(jelemt)
 {
-    var width = jelemt.getAttribute("Width");
-    var height = jelemt.getAttribute("Height");
-    var text = jelemt.getAttribute("Text");
-    var click = jelemt.getAttribute("OnClick");
+    if (jelemt)
+    {
+        var width = jelemt.getAttribute("Width");
+        var height = jelemt.getAttribute("Height");
+        var text = jelemt.getAttribute("Text");
+        var click = jelemt.getAttribute("OnClick");
+    }
 
     if (width)
         this.width = parseInt(width.replace("px", ""));
@@ -493,7 +556,19 @@ function jwf$Button(jelemt)
 
 }
 
-$j.Button = jwf$Button;
+$j.Button = function jwf$Create$Button(id)
+{
+    var ctrl = new jwf$Button();
+
+    if (id)
+    {
+        jwf$RegiterControl(ctrl, id);
+    }
+
+    return ctrl;
+}
+
+jwf$Button.prototype = new jwf$Control();
 
 jwf$Button.prototype.Width = function jwf$Button$Width(width)
 {
@@ -513,4 +588,21 @@ jwf$Button.prototype.Height = function jwf$Button$Height(height)
     this.height = parseInt(height.replace("px", ""));
 
     this.elemt.style.height = this.height + "px";
+}
+
+jwf$Button.prototype.Click = function jwf$Button$Click(click)
+{
+    if (!click)
+        return this.click;
+
+    this.click = click;
+}
+
+jwf$Button.prototype.Text = function jwf$Button$Text(text)
+{
+    if (!text)
+        return this.text;
+
+    this.text = text;
+    this.textDiv.innerHTML = text;
 }

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>动态 创建 和 添加 控件</title>
+    <link rel="stylesheet" type="text/css" href="jWebForm.css" />
+    <script type="text/javascript" src="jWebForm.js"></script>
+    <script type="text/javascript">
+
+
+        $j.Page_Load = function Page_Load()
+        {
+
+            CreateButtons();
+
+            CreateDropDownLists();
+
+            CreatePictureBoxes();
+
+        }
+
+        function CreateButtons()
+        {
+            var div = document.getElementById("divButton");
+
+            for (var i = 0; i < 3; i++)
+            {
+                var btn = $j.Button();  //  id 可以传，也可以不传，有 id 的话可以通过 $j(id) 找到 Control
+
+                btn.Text("Button" + (i + 1));
+
+                btn.Click(function btn_Click(btn)
+                {
+                    alert(btn.Text() + " Clicked .");
+                });
+
+                var elemt = btn.Element();  //  通过 Element() 属性（函数）返回 Control 最外层 的 Element，添加到 Html Dom 就可以了
+
+                div.appendChild(elemt);
+            }
+        }
+
+        function CreateDropDownLists()
+        {
+            var div = document.getElementById("divDropDownList");
+
+            for (var i = 0; i < 3; i++)
+            {
+                var ddl = $j.DropDownList("DropDownList" + (i+1));  //  id 可以传，也可以不传，有 id 的话可以通过 $j(id) 找到 Control
+
+                ddl.DataBind(
+                [
+                    "&nbsp;",
+                    "小明",
+                    "小刚",
+                    "小红"
+                ]);
+
+                var elemt = ddl.Element();  //  通过 Element() 属性（函数）返回 Control 最外层 的 Element，添加到 Html Dom 就可以了
+
+                div.appendChild(elemt);
+            }
+        }
+
+        function CreatePictureBoxes()
+        {
+            var div = document.getElementById("divPictureBox");
+
+            for (var i = 0; i < 3; i++)
+            {
+                var picBox = $j.PictureBox("picBox" + (i+1));  //  id 可以传，也可以不传，有 id 的话可以通过 $j(id) 找到 Control
+
+                picBox.LoadImages(
+                [
+                    "images/美女1-1.jpg",
+                    "images/美女1-2.jpg",
+                    "images/美女1-3.jpg"
+                ],
+
+                function (p) {
+                    p.Play();
+                }
+               );
+
+                var elemt = picBox.Element();  //  通过 Element() 属性（函数）返回 Control 最外层 的 Element，添加到 Html Dom 就可以了
+
+                div.appendChild(elemt);
+            }
+        }
+
+    </script>
+</head>
+<body>
+
+    按钮
+    <div id="divButton"></div>
+
+    下拉框
+    <div id="divDropDownList"></div>
+
+    PictureBox
+    <div id="divPictureBox">
+
+        每 5 秒 播放一张图片
+
+        <br /><br />
+
+    </div>
+
+</body>
+</html>
