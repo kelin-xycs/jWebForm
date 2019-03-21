@@ -1,28 +1,18 @@
 window.addEventListener("load", jwf$Window_Load);
-window.addEventListener("mousedown", jwf$Window_MouseDown);
 
 var jwf$Controls = new Object();
-var jwf$Window_MouseDown_Events = [];
 
 function $j(id) {
     return jwf$Controls[id];
 }
 
-function jwf$Window_Load() {
-
+function jwf$Window_Load()
+{
     jwf$InitControls();
 
-    if ($j.Page_Load) {
+    if ($j.Page_Load)
+    {
         $j.Page_Load();
-    }
-}
-
-function jwf$AddEventHandler_Window_MouseDown(handler) {
-    jwf$Window_MouseDown_Events[jwf$Window_MouseDown_Events.length] = handler;
-}
-function jwf$Window_MouseDown() {
-    for (var i = 0; i < jwf$Window_MouseDown_Events.length; i++) {
-        jwf$Window_MouseDown_Events[i]();
     }
 }
 
@@ -75,22 +65,41 @@ function jwf$RegiterControl(ctrl, id)
     jwf$Controls[id] = ctrl;
 }
 
+var jwf$ControlTypes =
+{
+    "J:DROPDOWNLIST": jwf$DropDownList,
+    "J:PICTUREBOX": jwf$PictureBox,
+    "J:BUTTON": jwf$Button,
+    "J:DROPMENU": jwf$DropMenu
+};
+
 function jwf$GetControl(jelemt)
 {
-    if (jelemt.nodeName == "J:DROPDOWNLIST")
-    {
-        return new jwf$DropDownList(jelemt);
-    }
-    else if (jelemt.nodeName == "J:PICTUREBOX")
-    {
-        return new jwf$PictureBox(jelemt);
-    }
-    else if (jelemt.nodeName == "J:BUTTON")
-    {
-        return new jwf$Button(jelemt);
-    }
+    var ctor = jwf$ControlTypes[jelemt.nodeName];
 
-    throw "无效的 nodeName ：\"" + jelemt.nodeName + "\" 。";
+    if (!ctor)
+        throw "无效的 nodeName ：\"" + jelemt.nodeName + "\" 。";
+
+    return new ctor(jelemt);
+
+    //if (jelemt.nodeName == "J:DROPDOWNLIST")
+    //{
+    //    return new jwf$DropDownList(jelemt);
+    //}
+    //else if (jelemt.nodeName == "J:PICTUREBOX")
+    //{
+    //    return new jwf$PictureBox(jelemt);
+    //}
+    //else if (jelemt.nodeName == "J:BUTTON")
+    //{
+    //    return new jwf$Button(jelemt);
+    //}
+    //else if (jelemt.nodeName == "J:DROPMENU")
+    //{
+    //    return new jwf$DropMenu(jelemt);
+    //}
+
+    //throw "无效的 nodeName ：\"" + jelemt.nodeName + "\" 。";
 }
 
 function jwf$Control()
@@ -105,7 +114,6 @@ jwf$Control.prototype.Element = function jwf$Control$Element()
 
 function jwf$DropDownList(jelemt)
 {
-
     if (jelemt)
     {
         var width = jelemt.getAttribute("Width");
@@ -171,17 +179,16 @@ function jwf$DropDownList(jelemt)
     this.drop = drop;
     drop.jwfObj = this;
 
-
-    jwf$AddEventHandler_Window_MouseDown(
-        function jwf$DropDownList$Window_MouseDown() {
-            if (drop.jwfObj.mousedownSelf) {
-                drop.jwfObj.mousedownSelf = false;
-                return;
-            }
-
-            drop.style.display = "none";
+    window.addEventListener("mousedown", function jwf$DropDownList$window_mousedown()
+    {
+        if (drop.jwfObj.mousedownSelf)
+        {
+            drop.jwfObj.mousedownSelf = false;
+            return;
         }
-    );
+
+        drop.style.display = "none";
+    });
 }
 
 $j.DropDownList = function jwf$Create$DropDownList(id)
@@ -588,4 +595,143 @@ jwf$Button.prototype.Text = function jwf$Button$Text(text)
 
     this.text = text;
     this.textDiv.innerHTML = text;
+}
+
+function jwf$DropMenu(jelemt)
+{
+    var elemt = document.createElement("div");
+
+    elemt.style.display = "inline-block";
+
+    elemt.style.cursor = "default";
+
+    this.elemt = elemt;
+    elemt.jwfObj = this;
+}
+
+$j.DropMenu = function jwf$Create$DropMenu(id)
+{
+    var ctrl = new jwf$DropMenu();
+
+    if (id)
+    {
+        jwf$RegiterControl(ctrl, id);
+    }
+
+    return ctrl;
+}
+
+jwf$DropMenu.prototype = new jwf$Control();
+
+jwf$DropMenu.prototype.AddTopItem = function jwf$DropMenu$AddTopItem(topItem)
+{
+    if (!topItem instanceof jwf$DropMenu$TopItem)
+        throw "参数 topItem 不是 TopItem 对象，应使用 $j.DropMenu.TopItem() 方法创建 TopItem 。";
+
+    var elemt = this.elemt;
+
+    elemt.appendChild(topItem.div);
+}
+
+function jwf$DropMenu$TopItem(text)
+{
+    var div = document.createElement("div");
+
+    div.style.display = "inline-block";
+    div.style.paddingLeft = "5px";
+    div.style.paddingRight = "5px";
+    div.style.position = "relative";
+
+    this.div = div;
+    div.jwfObj = this;
+
+    var textDiv = document.createElement("div");
+    textDiv.className = "jwf_DropMenu_TopItem";
+    textDiv.innerText = text;
+
+    div.appendChild(textDiv);
+
+    var drop = document.createElement("div");
+
+    drop.style.display = "none";
+    drop.style.padding = "1px";
+    drop.style.border = "solid 1px gray";
+    drop.style.backgroundColor = "white";
+    drop.style.position = "absolute";
+    drop.style.zIndex = 1;
+    drop.style.whiteSpace = "nowrap";
+
+    div.appendChild(drop);
+
+    this.drop = drop;
+    drop.jwfObj = this;
+
+    textDiv.addEventListener("mousedown", function jwf$DropMenu$TopItem$textDiv_mousedown()
+    {
+        drop.style.display = "block";
+    });
+
+    div.addEventListener("mousedown", function jwf$DropMenu$TopItem$div_mousedown()
+    {
+        div.jwfObj.mousedownSelf = true;
+    });
+
+    window.addEventListener("mousedown", function jwf$DropMenu$window_mousedown()
+    {
+        if (drop.jwfObj.mousedownSelf) {
+            drop.jwfObj.mousedownSelf = false;
+            return;
+        }
+
+        drop.style.display = "none";
+    });
+}
+
+$j.DropMenu.TopItem = function jwf$Create$DropMenu$TopItem(text)
+{
+    return new jwf$DropMenu$TopItem(text);
+}
+
+jwf$DropMenu$TopItem.prototype.AddSubItem = function jwf$DropMenu$TopItem$AddSubItem(subItem)
+{
+    if (!subItem instanceof jwf$DropMenu$SubItem)
+        throw "参数 subItem 不是 SubItem 对象，应使用 $j.DropMenu.SubItem() 方法创建 SubItem 。";
+
+    var drop = this.drop;
+
+    subItem.drop = drop;
+
+    drop.appendChild(subItem.div);
+}
+
+function jwf$DropMenu$SubItem(text, click)
+{
+    var div = document.createElement("div");
+
+    div.style.paddingLeft = "5px";
+    div.style.paddingRight = "5px";
+    div.className = "jwf_DropMenu_SubItem";
+
+    div.innerText = text;
+
+    this.div = div;
+    div.jwfObj = this;
+
+    var subItem = this;
+
+    div.addEventListener("click", function jwf$DropMenu$SubItem$div_click()
+    {
+        var drop = subItem.drop;
+
+        if (drop)
+            drop.style.display = "none";
+
+        if (click)
+            click(subItem);
+    });
+}
+
+$j.DropMenu.SubItem = function jwf$Create$DropMenu$SubItem(text, click)
+{
+    return new jwf$DropMenu$SubItem(text, click);
 }

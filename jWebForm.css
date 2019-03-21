@@ -18,3 +18,19 @@
     background-color: lightblue;
     
 }
+
+.jwf_DropMenu_TopItem
+{
+
+}
+.jwf_DropMenu_TopItem:hover 
+{
+    text-decoration: underline;
+}
+.jwf_DropMenu_SubItem 
+{
+}
+.jwf_DropMenu_SubItem:hover 
+{
+    background-color: lightblue;
+}

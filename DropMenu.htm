@@ -1,0 +1,48 @@
+<html>
+<head>
+    <title>DropMenu</title>
+    <link rel="stylesheet" type="text/css" href="jWebForm.css" />
+    <script type="text/javascript" src="jWebForm.js"></script>
+    <script type="text/javascript">
+
+        $j.Page_Load = function Page_Load()
+        {
+
+            var dropMenu = $j("DropMenu1");
+
+            var topItem = $j.DropMenu.TopItem("文件");
+
+            var subItem = $j.DropMenu.SubItem("保存", function () { alert("保存"); });
+            topItem.AddSubItem(subItem);
+
+            subItem = $j.DropMenu.SubItem("aaaaaaaaaaaaaaa", function () { alert("aaaaaaaaaaaaaaa"); });
+            topItem.AddSubItem(subItem);
+
+            subItem = $j.DropMenu.SubItem("bbbbbbbbbbbbbbbbbbb", function () { alert("bbbbbbbbbbbbbbbbbbb"); });
+            topItem.AddSubItem(subItem);
+
+            dropMenu.AddTopItem(topItem);
+
+
+
+
+            topItem = $j.DropMenu.TopItem("工具");
+
+            subItem = $j.DropMenu.SubItem("选项", function () { alert("选项"); });
+            topItem.AddSubItem(subItem);
+
+            subItem = $j.DropMenu.SubItem("ccccccccccccccc", function () { alert("ccccccccccccccc"); });
+            topItem.AddSubItem(subItem);
+
+            dropMenu.AddTopItem(topItem);
+             
+        }
+
+    </script>
+</head>
+<body>
+    <j:DropMenu id="DropMenu1"></j:DropMenu>
+    <br />
+    <input />
+</body>
+</html>
