@@ -124,7 +124,7 @@
     //     }
     // })
     function $j(selector) {
-        return JWebFormSelectorFirst(selector);
+        return JWebFormSelectorFirst(selector).$jwfObj;
     }
     window.$j = $j;
     function JWebFormSelectorFirst(selectors) {
@@ -135,6 +135,7 @@
             }
         }
     }
+    //# sourceMappingURL=jWebForm.js.map
 
     exports.$j = $j;
 

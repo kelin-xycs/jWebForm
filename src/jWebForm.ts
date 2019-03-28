@@ -36,7 +36,7 @@ function InitControl(eles: HTMLCollectionOf<Element>, ins: IControl<any>) {
 //     }
 // })
 export function $j(selector: string) {
-    return JWebFormSelectorFirst(selector)
+    return (JWebFormSelectorFirst(selector) as any).$jwfObj
 }
 export namespace $j {
     
