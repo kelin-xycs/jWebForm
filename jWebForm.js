@@ -89,8 +89,9 @@
     Button.tagName = 'button';
     Button.rawTagName = 'div';
     regControl(Button);
+    //# sourceMappingURL=Button.js.map
 
-    window.addEventListener('load', () => {
+    window.addEventListener('DOMContentLoaded', () => {
         InitControls();
     });
     function InitControls() {
@@ -123,7 +124,7 @@
     //     }
     // })
     function $j(selector) {
-        return JWebFormSelectorFirst(selector).$jwfObj
+        return JWebFormSelectorFirst(selector);
     }
     window.$j = $j;
     function JWebFormSelectorFirst(selectors) {
@@ -134,7 +135,6 @@
             }
         }
     }
-    //# sourceMappingURL=jWebForm.js.map
 
     exports.$j = $j;
 

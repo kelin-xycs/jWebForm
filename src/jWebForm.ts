@@ -1,7 +1,7 @@
 import { Controls, IControl, Control } from './Controls'
 import './Button'
 
-window.addEventListener('load', () => {
+window.addEventListener('DOMContentLoaded', () => {
     InitControls()
 })
 
