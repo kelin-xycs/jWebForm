@@ -1,0 +1,23 @@
+{
+  "name": "jwebform",
+  "version": "1.0.0",
+  "description": "",
+  "main": "jWebForm.old.js",
+  "scripts": {
+    "build": "tsc && rollup -c"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kelin-xycs/jWebForm.git"
+  },
+  "author": "",
+  "license": "UNKNOWN",
+  "bugs": {
+    "url": "https://github.com/kelin-xycs/jWebForm/issues"
+  },
+  "homepage": "https://github.com/kelin-xycs/jWebForm#readme",
+  "devDependencies": {
+    "rollup": "^1.7.4",
+    "typescript": "^3.3.4000"
+  }
+}
