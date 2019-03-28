@@ -8,40 +8,40 @@
     <script type="text/javascript">
 
         function btnEditWidth_Click() {
-            var Button1 = $j("Button1");
+            var Button1 = $j("#Button1");
 
-            var width = document.getElementById("txtWidth").value;
+            var width = document.getElementById("txtWidth").value
 
-            Button1.Width(width);
+            Button1.width = width
         }
 
         function btnShowWidth_Click() {
-            var Button1 = $j("Button1");
+            var Button1 = $j("#Button1")
 
-            var width = Button1.Width();
+            var width = Button1.width
 
-            alert(width);
+            alert(width)
         }
 
         function btnEditHeight_Click() {
-            var Button1 = $j("Button1");
+            var Button1 = $j("#Button1");
 
-            var height = document.getElementById("txtHeight").value;
+            var height = document.getElementById("txtHeight").value
 
-            Button1.Height(height);
+            Button1.height = height
         }
 
         function btnShowHeight_Click() {
-            var Button1 = $j("Button1");
+            var Button1 = $j("#Button1")
 
-            var height = Button1.Height();
+            var height = Button1.height
 
-            alert(height);
+            alert(height)
         }
 
         function Button1_Click(btn)
         {
-            alert(btn.id + " Clicked .");
+            alert(btn.id + " Clicked .")
         }
 
     </script>

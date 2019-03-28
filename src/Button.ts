@@ -45,6 +45,7 @@ export class Button extends Control<HTMLDivElement> {
 
     get width() { return this._width }
     set width(width: number | string) {
+        console.log(width)
         if (width != null)
             this._width = typeof width === 'number' ? width : parseInt(width.replace("px", ""))
 

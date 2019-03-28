@@ -17,7 +17,7 @@ function InitControl(eles: HTMLCollectionOf<Element>, ins: IControl<any>) {
     }
     arr.map(ele => () => {
         const obj = new ins(ele, ins.rawTagName);
-        (ele as any).$jwfObj = obj
+        (obj.ele as any).$jwfObj = obj
     }).forEach(f => f())
 }
 
@@ -41,6 +41,7 @@ export function $j(selector: string) {
 export namespace $j {
     
 }
+(window as any).$j = $j
 
 function JWebFormSelectorFirst(selectors: string): Element {
     const nodes = document.querySelectorAll(selectors)

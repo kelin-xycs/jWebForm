@@ -4,6 +4,8 @@ export abstract class Control<E extends Element> {
     ele: E
     constructor(jele: Element, tagName: getEleType<E>) {
         this.ele = document.createElement(tagName)
+        const id = jele.getAttribute("id")
+        if (id != null) this.ele.id = id
         this.init(jele)
         jele.parentNode.replaceChild(this.ele, jele);
     }

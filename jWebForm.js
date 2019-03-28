@@ -7,6 +7,9 @@
     class Control {
         constructor(jele, tagName) {
             this.ele = document.createElement(tagName);
+            const id = jele.getAttribute("id");
+            if (id != null)
+                this.ele.id = id;
             this.init(jele);
             jele.parentNode.replaceChild(this.ele, jele);
         }
@@ -54,6 +57,7 @@
         }
         get width() { return this._width; }
         set width(width) {
+            console.log(width);
             if (width != null)
                 this._width = typeof width === 'number' ? width : parseInt(width.replace("px", ""));
             this.ele.style.width = `${this._width}px`;
@@ -85,7 +89,6 @@
     Button.tagName = 'button';
     Button.rawTagName = 'div';
     regControl(Button);
-    //# sourceMappingURL=Button.js.map
 
     window.addEventListener('load', () => {
         InitControls();
@@ -102,7 +105,7 @@
         }
         arr.map(ele => () => {
             const obj = new ins(ele, ins.rawTagName);
-            ele.$jwfObj = obj;
+            obj.ele.$jwfObj = obj;
         }).forEach(f => f());
     }
     // export interface JWebForm {
@@ -120,8 +123,9 @@
     //     }
     // })
     function $j(selector) {
-        return JWebFormSelectorFirst(selector);
+        return JWebFormSelectorFirst(selector).$jwfObj
     }
+    window.$j = $j;
     function JWebFormSelectorFirst(selectors) {
         const nodes = document.querySelectorAll(selectors);
         for (const node of nodes) {
@@ -130,6 +134,7 @@
             }
         }
     }
+    //# sourceMappingURL=jWebForm.js.map
 
     exports.$j = $j;
 
