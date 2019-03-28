@@ -4,7 +4,9 @@
   "description": "",
   "main": "jWebForm.old.js",
   "scripts": {
-    "build": "tsc && rollup -c"
+    "build": "tsc && rollup -c",
+    "tsc:watch": "tsc -w",
+    "rollup:watch": "rollup -c -w"
   },
   "repository": {
     "type": "git",
