@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>EditArea</title>
+    <link rel="stylesheet" type="text/css" href="jWebForm.css" />
+    <script type="text/javascript" src="jWebForm.js"></script>
+    <script type="text/javascript" src="EditArea.js"></script>
+    <script type="text/javascript">
+
+
+        $j.Page_Load = function Page_Load() {
+
+            var editArea1 = $j("editArea1");
+
+            editArea1.Init();
+        }
+
+    </script>
+</head>
+<body>
+
+    <div style="padding:40px">
+
+        <div style="width:fit-content; height:440px; border:solid 1px gray; overflow-y:auto">
+            <j:editarea id="editArea1"></j:editarea>
+        </div>
+
+    </div>
+
+</body>
+</html>
