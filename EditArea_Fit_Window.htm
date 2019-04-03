@@ -1,0 +1,34 @@
+<!DOCTYPE html style="">
+<html>
+<head>
+    <title>EditArea Fit Window</title>
+    <link rel="stylesheet" type="text/css" href="jWebForm.css" />
+    <script type="text/javascript" src="jWebForm.js"></script>
+    <script type="text/javascript" src="EditArea.js"></script>
+    <script type="text/javascript">
+
+
+        $j.Page_Load = function Page_Load()
+        {
+            var editArea1 = $j("editArea1");
+
+            editArea1.Init();
+        }
+
+    </script>
+</head>
+<body>
+    <table style="height:100%; width:100%">
+        <tr>
+            <td style="height:50px">込込込込</td>
+        </tr>
+        <tr>
+            <td>
+                <div id="div1" style="border:solid 1px gray; overflow-y:auto; height:100%;">
+                    <j:EditArea id="editArea1" MinHeight="100%"></j:EditArea>
+                </div>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

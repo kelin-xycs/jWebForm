@@ -3,24 +3,48 @@
     {
         jwf$ControlTypes["J:EDITAREA"] = EditArea;
 
-        function EditArea() {
+        function EditArea(jelemt)
+        {
+
+            if (jelemt)
+            {
+                var width = jelemt.getAttribute("Width");
+                var minHeight = jelemt.getAttribute("MinHeight");
+            }
+
+            if (width)
+                this.width = width;
+
+            if (minHeight)
+                this.minHeight = minHeight;
+
+
             var elemt = document.createElement("div");
 
-            elemt.style.width = "400px"
-            elemt.style.minHeight = "400px";
-            //elemt.style.border = "solid 1px blue";
+            elemt.style.boxSizing = "border-box";
+            elemt.style.width = this.width;
+            elemt.style.minHeight = this.minHeight;
             elemt.style.position = "relative";
             elemt.style.padding = this.editAreaPadding;
-            //elemt.style.overflowY = "auto";
             elemt.style.backgroundColor = "white";
 
             this.elemt = elemt;
 
-            var div = document.createElement("div");
+            var ifr = document.createElement("iframe");
+            ifr.style.width = "100%";
+            ifr.style.height = "100%";
+            ifr.style.position = "absolute";
+            ifr.style.top = "0px";
+            ifr.style.left = "0px";
+            ifr.style.border = "0px"
+            ifr.style.boxSizing = "border-box";
+            ifr.style.zIndex = -1;
 
-            div.style.width = "100%";
-            div.style.height = "100%";
-            //div.style.border = "solid 1px red";
+            elemt.appendChild(ifr);
+
+            this.ifr = ifr;
+
+            var div = document.createElement("div");
 
             elemt.appendChild(div);
 
@@ -84,7 +108,6 @@
 
             txtBoxForInput.addEventListener("compositionstart",
                 function txtBoxForInput_compositionstart() {
-                    //console.info("composition start");
                     editArea.isCompositionStart = true;
                 });
 
@@ -117,6 +140,8 @@
 
         EditArea.prototype.rowArray = null;
         EditArea.prototype.isComposingChanged = true;
+        EditArea.prototype.lastOffsetWidth = null;
+        EditArea.prototype.lastOffsetHeight = null;
 
         EditArea.prototype.beginX = null;
         EditArea.prototype.beginY = null;
@@ -128,10 +153,30 @@
         EditArea.prototype.isCompositionStart = false;
 
         EditArea.prototype.Init = Init;
+        EditArea.prototype.MinHeight = MinHeight;
 
-        function Init() {
+        function Init()
+        {
+            var editArea = this;
+
+            this.ifr.contentWindow.addEventListener("resize", function ()
+            {
+                editArea.isComposingChanged = true;
+
+                setSpanIcon(editArea);
+            });
+
             setSpanIcon(this);
             spanIcon_Action(this);
+        }
+
+        function MinHeight(minHeight) {
+            if (!minHeight)
+                return this.minHeight;
+
+            this.minHeight = minHeight;
+
+            this.elemt.style.minHeight = minHeight;
         }
 
         function createSpanSpace() {
@@ -272,6 +317,13 @@
 
         function getRowArray(editArea) {
 
+            var elemt = editArea.elemt;
+
+            if (editArea.lastOffsetWidth != elemt.offsetWidth || editArea.lastOffsetHeight != elemt.offsetHeight)
+            {
+                editArea.isComposingChanged = true;
+            }
+
             if (editArea.isComposingChanged == false) {
                 return editArea.rowArray;
             }
@@ -335,6 +387,8 @@
 
             editArea.rowArray = tempRowArray;
             editArea.isComposingChanged = false;
+            editArea.lastOffsetWidth = elemt.offsetWidth;
+            editArea.lastOffsetHeight = elemt.offsetHeight;
 
             return tempRowArray;
         }
