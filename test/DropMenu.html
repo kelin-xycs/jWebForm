@@ -1,8 +1,9 @@
 <html>
 <head>
+    <meta charset="utf-8">
     <title>DropMenu</title>
-    <link rel="stylesheet" type="text/css" href="jWebForm.css" />
-    <script type="text/javascript" src="jWebForm.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/jWebForm.css" />
+    <script type="text/javascript" src="../jWebForm.old.js"></script>
     <script type="text/javascript">
 
         $j.Page_Load = function Page_Load()
@@ -10,9 +11,9 @@
 
             var dropMenu = $j("DropMenu1");
 
-            var topItem = $j.DropMenu.TopItem("文件");
+            var topItem = $j.DropMenu.TopItem("鏂囦欢");
 
-            var subItem = $j.DropMenu.SubItem("保存", function () { alert("保存"); });
+            var subItem = $j.DropMenu.SubItem("淇濆瓨", function () { alert("淇濆瓨"); });
             topItem.AddSubItem(subItem);
 
             subItem = $j.DropMenu.SubItem("aaaaaaaaaaaaaaa", function () { alert("aaaaaaaaaaaaaaa"); });
@@ -26,9 +27,9 @@
 
 
 
-            topItem = $j.DropMenu.TopItem("工具");
+            topItem = $j.DropMenu.TopItem("宸ュ叿");
 
-            subItem = $j.DropMenu.SubItem("选项", function () { alert("选项"); });
+            subItem = $j.DropMenu.SubItem("閫夐」", function () { alert("閫夐」"); });
             topItem.AddSubItem(subItem);
 
             subItem = $j.DropMenu.SubItem("ccccccccccccccc", function () { alert("ccccccccccccccc"); });
