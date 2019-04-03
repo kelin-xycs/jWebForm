@@ -140,8 +140,6 @@
 
         EditArea.prototype.rowArray = null;
         EditArea.prototype.isComposingChanged = true;
-        EditArea.prototype.lastOffsetWidth = null;
-        EditArea.prototype.lastOffsetHeight = null;
 
         EditArea.prototype.beginX = null;
         EditArea.prototype.beginY = null;
@@ -317,13 +315,6 @@
 
         function getRowArray(editArea) {
 
-            var elemt = editArea.elemt;
-
-            if (editArea.lastOffsetWidth != elemt.offsetWidth || editArea.lastOffsetHeight != elemt.offsetHeight)
-            {
-                editArea.isComposingChanged = true;
-            }
-
             if (editArea.isComposingChanged == false) {
                 return editArea.rowArray;
             }
@@ -387,8 +378,6 @@
 
             editArea.rowArray = tempRowArray;
             editArea.isComposingChanged = false;
-            editArea.lastOffsetWidth = elemt.offsetWidth;
-            editArea.lastOffsetHeight = elemt.offsetHeight;
 
             return tempRowArray;
         }
