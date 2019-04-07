@@ -4,6 +4,8 @@
     <title>DropDownList</title>
     <link rel="stylesheet" type="text/css" href="jWebForm.css" />
     <script type="text/javascript" src="jWebForm.js"></script>
+    <script type="text/javascript" src="DropDown.js"></script>
+    <script type="text/javascript" src="DropDownList.js"></script>
     <script type="text/javascript">
 
         function btnEditWidth_Click()
@@ -55,8 +57,26 @@
                     "小红"
                 ]
                 );
+
+
+            var ddlPerson2 = $j("ddlPerson2");
+
+            ddlPerson2.DataBind(
+                [
+                    "&nbsp;",
+                    "小明",
+                    "小刚",
+                    "小红"
+                ]
+                );
         }
 
+        function ddlPerson2_SelectChanged(ddl)
+        {
+            var selectedText = ddl.SelectedText();
+
+            alert("SelectedText : " + "\"" + selectedText + "\"");
+        }
     </script>
 </head>
 <body>
@@ -73,7 +93,11 @@
 
     <br /><br />
 
-    <j:DropDownList id="ddlPerson" Width="300px" Height="30px"></j:DropDownList>
+    <j:DropDownList id="ddlPerson"></j:DropDownList>
     
+    <j:dropdownlist id="ddlPerson2" selectchanged="ddlPerson2_SelectChanged"></j:dropdownlist>    selectChanged 事件
+
+    <br /><br />
+    DropDownList 是 display:inline-block 的，可以直接嵌入到布局中
 </body>
 </html>

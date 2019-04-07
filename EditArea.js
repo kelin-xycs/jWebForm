@@ -150,33 +150,6 @@
 
         EditArea.prototype.isCompositionStart = false;
 
-        EditArea.prototype.Init = Init;
-        EditArea.prototype.MinHeight = MinHeight;
-
-        function Init()
-        {
-            var editArea = this;
-
-            this.ifr.contentWindow.addEventListener("resize", function ()
-            {
-                editArea.isComposingChanged = true;
-
-                setSpanIcon(editArea);
-            });
-
-            setSpanIcon(this);
-            spanIcon_Action(this);
-        }
-
-        function MinHeight(minHeight) {
-            if (!minHeight)
-                return this.minHeight;
-
-            this.minHeight = minHeight;
-
-            this.elemt.style.minHeight = minHeight;
-        }
-
         function createSpanSpace() {
             var spanSpace = createSpan();
             spanSpace.innerHTML = "&nbsp;";
@@ -322,19 +295,20 @@
             console.info("compute row array .");
 
             var tempRowArray = [];
-            var span;
 
             var div = editArea.div;
-
-            var firstSpan = div.firstChild;
 
             var row;
 
             var j = 0;
 
-            for (var i = 0; i < div.childNodes.length; i++) {
-                span = div.childNodes[i];
-
+            var firstSpan = div.firstChild;
+            var span = div.firstChild;
+            //for (var i = 0; i < div.childNodes.length; i++) 
+            while (firstSpan)
+            {
+                //span = div.childNodes[i];
+                
                 if (span.offsetLeft == firstSpan.offsetLeft) {
                     row = { beginSpan: span, endSpan: null };
                 }
@@ -346,6 +320,11 @@
 
                     j++;
                 }
+
+                if (span == div.lastChild)
+                    break;
+
+                span = span.nextElementSibling;
             }
 
             var maxBottomY;
@@ -712,28 +691,53 @@
             }
         }
 
-        function setFontFamily(font) {
-            var selectedSpanArray = this.getSelectedSpanArray(editArea);
+        EditArea.prototype.Init = function Init() {
+            var editArea = this;
+
+            this.ifr.contentWindow.addEventListener("resize", function () {
+                editArea.isComposingChanged = true;
+
+                setSpanIcon(editArea);
+            });
+
+            setSpanIcon(this);
+            spanIcon_Action(this);
+        }
+
+        EditArea.prototype.MinHeight = function MinHeight(minHeight) {
+            if (!minHeight)
+                return this.minHeight;
+
+            this.minHeight = minHeight;
+
+            this.elemt.style.minHeight = minHeight;
+        }
+
+        EditArea.prototype.SetFontFamily = function SetFontFamily(font)
+        {
+            var selectedSpanArray = getSelectedSpanArray(this);
 
             for (var i = 0; i < selectedSpanArray.length; i++) {
                 selectedSpanArray[i].style.fontFamily = font;
             }
 
-            editArea.isComposingChanged = true;
+            this.isComposingChanged = true;
         }
 
-        function setFontSize(fontSize) {
-            var selectedSpanArray = this.getSelectedSpanArray();
+        EditArea.prototype.SetFontSize = function SetFontSize(fontSize)
+        {
+            var selectedSpanArray = getSelectedSpanArray(this);
 
             for (var i = 0; i < selectedSpanArray.length; i++) {
                 selectedSpanArray[i].style.fontSize = fontSize;
             }
 
-            editArea.isComposingChanged = true;
+            this.isComposingChanged = true;
         }
 
-        function setFontColor(color) {
-            var selectedSpanArray = this.getSelectedSpanArray();
+        EditArea.prototype.SetFontColor = function SetFontColor(color)
+        {
+            var selectedSpanArray = getSelectedSpanArray(this);
 
             for (var i = 0; i < selectedSpanArray.length; i++) {
                 selectedSpanArray[i].style.color = color;

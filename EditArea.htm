@@ -3,26 +3,132 @@
 <head>
     <title>EditArea</title>
     <link rel="stylesheet" type="text/css" href="jWebForm.css" />
+    <style type="text/css">
+        .colorBlock div {
+            width: 16px;
+            height: 16px;
+            margin: 2px;
+        }
+    </style>
     <script type="text/javascript" src="jWebForm.js"></script>
+    <script type="text/javascript" src="DropDown.js"></script>
+    <script type="text/javascript" src="DropDownList.js"></script>
     <script type="text/javascript" src="EditArea.js"></script>
     <script type="text/javascript">
 
 
         $j.Page_Load = function Page_Load() {
 
-            var editArea1 = $j("editArea1");
+            
+            BindFontFamilyList();
+
+            BindFontSizeList();
+
+            BindColorDrop();
+
+
+            var editArea1 = $j("EditArea1");
 
             editArea1.Init();
+
+        }
+
+        function BindFontFamilyList()
+        {
+            var ddlFontFamily = $j("ddlFontFamily");
+
+            ddlFontFamily.DataBind(
+                [
+                    "&nbsp;",
+                    "Arial",
+                    "ËÎÌå",
+                    "Î¢ÈíÑÅºÚ"
+                ]
+                );
+        }
+
+        function BindFontSizeList()
+        {
+            var ddlFontSize = $j("ddlFontSize");
+
+            ddlFontSize.DataBind(
+                [
+                    "&nbsp;",
+                    "20px",
+                    "30px",
+                    "40px",
+                    "50px",
+                    "60px"
+                ]
+                );
+        }
+
+        function BindColorDrop()
+        {
+            var ddnColor = $j("ddnColor");
+
+            var divColorTop = document.getElementById("divColorTop");
+            var divColorDrop = document.getElementById("divColorDrop");
+
+            ddnColor.Top(divColorTop);
+            ddnColor.Drop(divColorDrop);
+        }
+
+        function ddlFontFamily_SelectChanged(ddl)
+        {
+            var fontFamily = ddl.SelectedText().trim();
+
+            var editArea1 = $j("EditArea1");
+
+            editArea1.SetFontFamily(fontFamily);
+        }
+
+        function ddlFontSize_SelectChanged(ddl)
+        {
+            var fontSize = ddl.SelectedText().trim();
+
+            var editArea1 = $j("EditArea1");
+
+            editArea1.SetFontSize(fontSize);
+        }
+
+        function ddnColor_SelectColor(item)
+        {
+            var color = item.style.backgroundColor;
+
+            var editArea1 = $j("EditArea1");
+
+            editArea1.SetFontColor(color);
+
+            var ddnColor = $j("ddnColor");
+
+            ddnColor.Close();
         }
 
     </script>
 </head>
 <body>
 
+    <j:dropdownlist id="ddlFontFamily" selectchanged="ddlFontFamily_SelectChanged"></j:dropdownlist>
+
+    <j:dropdownlist id="ddlFontSize" selectchanged="ddlFontSize_SelectChanged"></j:dropdownlist>
+
+    <j:dropdown id="ddnColor"></j:dropdown>
+    <div id="divColorTop" class="colorBlock" style="width:20px;height:20px;border:solid 1px gray;">
+        <div style="background-color:red"></div>
+    </div>
+    <div id="divColorDrop" class="colorBlock" style="width:20px;border:solid 1px gray; background-color:white">
+        <div style="background-color:yellow" onclick="ddnColor_SelectColor(this);"></div>
+        <div style="background-color:red" onclick="ddnColor_SelectColor(this);"></div>
+        <div style="background-color:green" onclick="ddnColor_SelectColor(this);"></div>
+        <div style="background-color:blue" onclick="ddnColor_SelectColor(this);"></div>
+        <div style="background-color:black" onclick="ddnColor_SelectColor(this);"></div>
+    </div>
+
     <div style="padding:40px">
 
         <div style="width:480px; height:440px; border:solid 1px gray; overflow-y:auto">
-            <j:editarea id="editArea1" width="100%" minHeight="100%"></j:editarea>
+            <j:editarea id="EditArea1" minHeight="100%"></j:editarea>
         </div>
 
     </div>

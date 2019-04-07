@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DropDown</title>
+    <link rel="stylesheet" type="text/css" href="jWebForm.css" />
+    <style type="text/css">
+        .colorBlock div {
+            width: 16px;
+            height: 16px;
+            margin: 2px;
+        }
+    </style>
+    <script type="text/javascript" src="jWebForm.js"></script>
+    <script type="text/javascript" src="DropDown.js"></script>
+    <script type="text/javascript">
+
+        $j.Page_Load = function Page_Load()
+        {
+            var dropDown1 = $j("DropDown1");
+
+            var divColorTop = document.getElementById("divColorTop");
+            var divColorDrop = document.getElementById("divColorDrop");
+
+            dropDown1.Top(divColorTop);
+            dropDown1.Drop(divColorDrop);
+        }
+
+        function selectColor(divColor)
+        {
+            var div1 = document.getElementById("div1");
+
+            var color = divColor.style.backgroundColor;
+
+            div1.style.backgroundColor = color;
+
+            var dropDown1 = $j("DropDown1");
+
+            dropDown1.Close();
+        }
+
+    </script>
+</head>
+<body>
+    <div>下面用 DropDown 实现了一个 调色板 的 效果</div>
+
+    <br />
+
+    <j:dropdown id="DropDown1"></j:dropdown>    DropDown 是 display:inline-block 的，可以直接嵌入到布局中
+
+    <div id="divColorTop" class="colorBlock" style="width:20px;height:20px;border:solid 1px gray;">
+        <div style="background-color:red"></div>
+    </div>
+    <div id="divColorDrop" class="colorBlock" style="width:20px;border:solid 1px gray; background-color:white">
+        <div style="background-color:yellow" onclick="selectColor(this);"></div>
+        <div style="background-color:red" onclick="selectColor(this);"></div>
+        <div style="background-color:green" onclick="selectColor(this);"></div>
+        <div style="background-color:blue" onclick="selectColor(this);"></div>
+        <div style="background-color:black" onclick="selectColor(this);"></div>
+    </div>
+
+    <div id="div1" style="height:40px">
+
+    </div>
+
+</body>
+</html>

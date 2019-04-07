@@ -3,7 +3,7 @@ window.addEventListener("mousedown", jwf$window_mousedown);
 
 /* 这部分是 为了解决 window mousedown 事件 在 iframe 里 不起作用 的 问题
    iframe 是一个 独立的 window ， 点击 iframe 内容只会触发 iframe 窗口自己的 mousedown 事件
-   这样就导致 主窗口 的 DropDownList DropMenu 等 控件 不能利用 window mousedown 事件 关闭 下拉框 下拉菜单
+   这样就导致 主窗口 的 DropDown DropDownList DropMenu 等 控件 不能利用 window mousedown 事件 关闭 下拉框 下拉菜单
    使用方法 是：
 
     1 jWebForm 控件 使用 jwf$AddEventHandler_To_Frames_Window_MouseDown(handler) 方法 来 添加 window mousedown 事件 
@@ -15,7 +15,7 @@ window.addEventListener("mousedown", jwf$window_mousedown);
       ifr.contentWindow.addEventListener("mousedown", $j.Frame_Window_MouseDown);
 
     当然，第 2 步 不是必须的，如果不做 第 2 步，那么，jWebForm 就不知道 点击 iframe 的事件发生，
-    导致的效果就是 比如 点击 iframe 时 主窗口 里的 DropDownList DropMenu 的 下拉框 下拉菜单 不会关闭
+    导致的效果就是 比如 点击 iframe 时 主窗口 里的 DropDown DropDownList DropMenu 的 下拉框 下拉菜单 不会关闭
     当然这不一定是问题，有时候这样的效果也是可以接受的，甚至有时候要的就是这种效果。 ^^
 
    推而广之，如果一个页面中包含多个 iframe， iframe 也有嵌套，那么也适用上述的做法，
@@ -114,7 +114,7 @@ function jwf$RegiterControl(ctrl, id)
 
 var jwf$ControlTypes =
 {
-    "J:DROPDOWNLIST": jwf$DropDownList,
+    //"J:DROPDOWNLIST": jwf$DropDownList,
     "J:PICTUREBOX": jwf$PictureBox,
     "J:BUTTON": jwf$Button,
     "J:DROPMENU": jwf$DropMenu
@@ -157,176 +157,6 @@ function jwf$Control()
 jwf$Control.prototype.Element = function jwf$Control$Element()
 {
     return this.elemt;
-}
-
-function jwf$DropDownList(jelemt)
-{
-    if (jelemt)
-    {
-        var width = jelemt.getAttribute("Width");
-        var height = jelemt.getAttribute("Height");
-    }
-
-    if (width)
-        this.width = parseInt(width.replace("px", ""));
-    else
-        this.width = 200;
-
-    if (height)
-        this.height = parseInt(height.replace("px", ""));
-    else
-        this.height = 30;
-
-
-    var elemt = document.createElement("div");
-
-    elemt.style.width = this.width + "px";
-    elemt.style.height = this.height + "px";
-
-    this.elemt = elemt;
-    elemt.jwfObj = this;
-
-
-    var text = document.createElement("div");
-    text.style.width = (this.width - 2) + "px";
-    text.style.height = (this.height - 2) + "px";
-    text.style.border = "solid 1px lightblue";
-
-    text.addEventListener("click",
-        function jwf$DropDownList$elemt$click(e) {
-            var elemt = e.srcElement;
-            elemt.jwfObj.drop.style.display = "block";
-        }
-    );
-
-
-    text.addEventListener("mousedown",
-        function jwf$DropDownList$MouseDown(e) {
-            elemt.jwfObj.mousedownSelf = true;
-        }
-    );
-
-    elemt.appendChild(text);
-
-    this.text = text;
-    text.jwfObj = this;
-
-
-    var drop = document.createElement("div");
-
-    drop.style.display = "none";
-    drop.style.width = text.style.width;
-   
-    drop.style.border = "solid 1px gray";
-    drop.style.backgroundColor = "white";
-    drop.style.position = "relative";
-
-    elemt.appendChild(drop);
-
-    this.drop = drop;
-    drop.jwfObj = this;
-
-    jwf$AddEventHandler_To_Frames_Window_MouseDown(function jwf$DropDownList$window_mousedown()
-    {
-        if (drop.jwfObj.mousedownSelf)
-        {
-            drop.jwfObj.mousedownSelf = false;
-            return;
-        }
-
-        drop.style.display = "none";
-    });
-
-    /* 
-     * 用 jwf$AddEventHandler_To_Frames_Window_MouseDown() 替换 window.addEventListener() 的 原因 见
-     * jwf$AddEventHandler_To_Frames_Window_MouseDown() 及 相关方法和变量 的 注释 
-     */
-    //window.addEventListener("mousedown", function jwf$DropDownList$window_mousedown() {
-    //    if (drop.jwfObj.mousedownSelf) {
-    //        drop.jwfObj.mousedownSelf = false;
-    //        return;
-    //    }
-
-    //    drop.style.display = "none";
-    //});
-}
-
-$j.DropDownList = function jwf$Create$DropDownList(id)
-{
-    var ctrl = new jwf$DropDownList();
-
-    if (id)
-    {
-        jwf$RegiterControl(ctrl, id);
-    }
-
-    return ctrl;
-}
-
-jwf$DropDownList.prototype = new jwf$Control();
-
-jwf$DropDownList.prototype.Width = function jwf$DropDownList$Width(width)
-{
-    if (!width)
-        return this.width;
-
-    this.width = parseInt(width.replace("px", ""));
-
-    this.elemt.style.width = this.width + "px";
-    this.text.style.width = (this.width - 2) + "px";
-    this.drop.style.width = this.text.style.width;
-}
-
-jwf$DropDownList.prototype.Height = function jwf$DropDownList$Height(height)
-{
-    if (!height)
-        return this.height;
-
-    this.height = parseInt(height.replace("px", ""));
-
-    this.elemt.style.height = this.height + "px";
-    this.text.style.height = (this.height - 2) + "px";
-}
-
-jwf$DropDownList.prototype.DataBind = function jwf$DropDownList$DataBind(dataSource)
-{
-    var drop = this.drop;
-    
-    for (var i = 0; i < dataSource.length; i++)
-    {
-        var item = document.createElement("div");
-        
-        item.className = "jwf_DropDownListItem";
-        item.innerHTML = dataSource[i];
-
-        item.jwfObj = this;
-
-        item.addEventListener("mousedown",
-            function jwf$DropDownList$ItemMouseDown(e)
-            {
-                item.jwfObj.mousedownSelf = true;
-            }
-        );
-
-        item.addEventListener("click",
-            function jwf$DropDownList$ItemClick(e)
-            {
-                var item = e.srcElement;
-                var drop = item.jwfObj.drop;
-                var text = item.jwfObj.text;
-
-                text.innerHTML = item.innerHTML;
-
-                window.setTimeout(
-                    function jwf$DropDownList$ItemClickCloseDrop() {
-                        drop.style.display = "none";
-                    },
-                    100);
-            }
-        );
-
-        drop.appendChild(item);
-    }
 }
 
 function jwf$PictureBox(jelemt)
