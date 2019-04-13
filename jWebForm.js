@@ -172,22 +172,23 @@ function jwf$PictureBox(jelemt)
     }
 
     if (width)
-        this.width = parseInt(width.replace("px", ""));
+        this.width = width;//parseInt(width.replace("px", ""));
     else
-        this.width = 200;
+        this.width = "200px";
 
     if (height)
-        this.height = parseInt(height.replace("px", ""));
+        this.height = height;//parseInt(height.replace("px", ""));
     else
-        this.height = 300;
+        this.height = "300px";
 
 
     var elemt = document.createElement("div");
 
     elemt.style.display = "inline-block";
-    elemt.style.width = this.width + "px";
-    elemt.style.height = this.height + "px";
+    elemt.style.width = this.width;
+    elemt.style.height = this.height;
     elemt.style.border = "solid 1px lightblue";
+    elemt.setAttribute("ondragstart", "return false;");  // ∑¿÷πÕº∆¨Õœ∂Ø∏¥÷∆
 
 
     this.elemt = elemt;
@@ -262,8 +263,8 @@ jwf$PictureBox.prototype.LoadImages = function jwf$PictureBox$LoadImages(urlList
         var url = urlList[i];
         var img = document.createElement("img");
 
-        img.style.width = this.width + "px";
-        img.style.height = this.height + "px";
+        img.style.width = this.width;// + "px";
+        img.style.height = this.height;// + "px";
         
         img.src = url;
 
@@ -307,7 +308,7 @@ function jwf$PictureBox$PlayOneImage(picBox)
 
     var img = picBox.imgList[picBox.imgIndex];
 
-    img.style.marginTop = (picBox.height * -1) + "px";
+    img.style.marginTop = (picBox.elemt.offsetHeight * -1) + "px";
 
     var imgOld = picBox.imgDiv.childNodes[0];
 
@@ -324,7 +325,7 @@ function jwf$PictureBox$PlayOneImageStep(picBox)
 {
     var imgDiv = picBox.imgDiv;
 
-    var top = picBox.height * (1 - picBox.stepCount / 10);
+    var top = picBox.elemt.offsetHeight * (1 - picBox.stepCount / 10);
 
     if (top < 0)
         top = 0;

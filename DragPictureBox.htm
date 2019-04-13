@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>DragDialog</title>
+    <script type="text/javascript" src="jWebForm.js"></script>
+    <script type="text/javascript" src="DragObj.js"></script>
+    <script type="text/javascript">
+
+        $j.Page_Load = function Page_Load() {
+
+            var picBox1 = $j("picBox1");
+
+            picBox1.LoadImages(
+                [
+                    "images/美女1-1.jpg",
+                    "images/美女1-2.jpg",
+                    "images/美女1-3.jpg"
+                ],
+
+                function (p) {
+                    p.Play();
+                }
+              );
+
+
+            var picBoxElement = picBox1.Element();
+
+            var drag1 = $j.DragObj(picBoxElement);
+
+            drag1.Width("200px");
+            drag1.Height("300px");
+
+            drag1.Show();
+
+        }
+    </script>
+
+</head>
+<body>
+
+    <div style="font-size:60px">
+        拖拖看<br />
+        可将鼠标放在对话框边缘调整 图片贴 大小<br />
+        每 5 秒 播放一张图片<br />
+        通过这个原理，可以实现和 Windows 8 的 磁贴（Tip） 相似的效果
+    </div>
+
+    <j:PictureBox id="picBox1" Width="100%" Height="100%"></j:PictureBox>
+
+</body>
+</html>
