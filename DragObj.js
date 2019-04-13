@@ -6,27 +6,14 @@
             return new DragObj(contentElement, width, height);
         }
 
-        function DragObj(contentElement, left, top, width, height)
+        function DragObj(contentElement)
         {
-            if (left)
-                this.left = left;
-            else
-                this.left = "200px";
 
-            if (top)
-                this.top = top;
-            else
-                this.top = "100px";
-
-            if (width)
-                this.width = width;
-            else
-                this.width = "200px";
-
-            if (height)
-                this.height = height;
-            else
-                this.height = "150px";
+            this.left = "200px";
+            this.top = "100px";
+            this.width = "200px";
+            this.height = "150px";
+            this.padding = "2px";
 
 
             var elemt = document.createElement("div");
@@ -36,6 +23,8 @@
             elemt.style.left = this.left;
             elemt.style.width = this.width;
             elemt.style.height = this.height;
+            elemt.style.padding = "5px";
+            elemt.style.zIndex = _defaultZIndex;
 
 
             var ctrl = this;
@@ -53,8 +42,6 @@
                 });
 
             this.elemt = elemt;
-
-            elemt.appendChild(contentElement);
 
             this.contentElement = contentElement;
 
@@ -99,11 +86,15 @@
                 window.addEventListener("mousemove", window_mousemoveForResize);
                 window.addEventListener("mouseup", window_mouseupForResize);
 
-                document.documentElement.setAttribute("onselectstart", "return false;");
-
                 return;
             }
 
+
+            if (ctrl.isNotDrag == true)
+            {
+                ctrl.isNotDrag = false;
+                return;
+            }
 
             if (_draggingDiv != null)
                 _draggingDiv.style.zIndex = _defaultZIndex;
@@ -116,30 +107,28 @@
             _offY = e.clientY - div.offsetTop;
 
             window.addEventListener("mouseup", window_mouseup);
-            window.addEventListener("mousemove", window_mousemove);// = new Function("body_mousemove(event);");
+            window.addEventListener("mousemove", window_mousemove);
 
-            document.documentElement.setAttribute("onselectstart", "return false;");
         }
 
         function window_mouseup() {
 
             window.removeEventListener("mouseup", window_mouseup);
-            window.removeEventListener("mousemove", window_mousemove);// = new Function("body_mousemove(event);");
+            window.removeEventListener("mousemove", window_mousemove);
 
-            document.documentElement.removeAttribute("onselectstart");
         }
 
         function window_mousemove() {
             
-            if (_draggingDiv == null)
-                return;
-
             var e = window.event;
             var div = _draggingDiv;
 
             div.style.position = "absolute";
             div.style.top = (e.clientY - _offY) + "px";
             div.style.left = (e.clientX - _offX) + "px";
+
+            _txtFocusForNoSelection.focus();
+            div.focus();
         }
 
         function window_mouseupForResize()
@@ -153,15 +142,11 @@
 
             window.removeEventListener("mousemove", window_mousemoveForResize);
             window.removeEventListener("mouseup", window_mouseupForResize);
-
-            document.documentElement.removeAttribute("onselectstart");
-
-            console.info("window_mouseupForResize end");
         }
 
         function window_mousemoveForResize()
         {
-
+            
             var div = _resizingDiv;
 
             var e = window.event;
@@ -203,6 +188,9 @@
                 div.style.height = (div.resizeOriginalOffsetHeight + (e.clientY - div.resizeMouseOriginalY)) + "px";
             }
 
+            _txtFocusForNoSelection.focus();
+            div.focus();
+
         }
 
         function div_mousemoveForResize(ctrl)
@@ -214,6 +202,13 @@
             var div = ctrl.elemt;
 
             var e = window.event;
+
+            var newE = new Object();
+
+            newE.offsetX = e.pageX - div.offsetLeft;
+            newE.offsetY = e.pageY - div.offsetTop;
+
+            e = newE;
 
             if (e.offsetX >= ((div.offsetWidth - 1) - 10) && e.offsetX <= (div.offsetWidth - 1)
                 && e.offsetY >= (div.offsetHeight - 1) - 10 && e.offsetY <= (div.offsetHeight - 1)) {
@@ -260,7 +255,7 @@
                 div.resizeOrientation = "Bottom";
             }
             else {
-                div.style.cursor = "";
+                div.style.cursor = "default";
                 div.canResize = false;
                 div.resizeOrientation = "";
             }
@@ -269,7 +264,96 @@
 
         DragObj.prototype.Show = function Show()
         {
-            document.documentElement.appendChild(this.elemt);
+            if (_isInit == false)
+            {
+                var txtFocus = document.createElement("input");
+                txtFocus.type = "text";
+                txtFocus.style.width = "0px";
+                txtFocus.style.height = "0px";
+                txtFocus.style.position = "absolute";
+                txtFocus.style.top = "-10px";
+                txtFocus.style.left = "-10px";
+
+                document.documentElement.appendChild(txtFocus);
+
+                _txtFocusForNoSelection = txtFocus;
+
+                _isInit = true;
+            }
+
+
+            var elemt = this.elemt;
+
+            elemt.appendChild(this.contentElement);
+
+            document.documentElement.appendChild(elemt);
+        }
+
+        DragObj.prototype.Close = function Close() {
+
+            document.documentElement.removeChild(this.elemt);
+
+        }
+
+        DragObj.prototype.NotDrag = function NotDrag(notDragElement)
+        {
+            var ctrl = this;
+
+            notDragElement.style.cursor = "auto";
+
+            notDragElement.addEventListener("mousedown", function () {
+                ctrl.isNotDrag = true;
+            });
+        }
+
+        DragObj.prototype.Width = function Width(width)
+        {
+            if (!width)
+                return this.width;
+
+            this.width = width;
+
+            this.elemt.style.width = width;
+        }
+        
+        DragObj.prototype.Height = function Height(height)
+        {
+            if (!height)
+                return this.height;
+
+            this.height = height;
+
+            this.elemt.style.height = height;
+        }
+
+        DragObj.prototype.Top = function Top(top)
+        {
+            if (!top)
+                return top;
+
+            this.top = top;
+
+            this.elemt.style.top = top;
+        }
+
+        DragObj.prototype.Left = function Left(left)
+        {
+            if (!left)
+                return left;
+
+            this.left = left;
+
+            this.elemt.style.left = left;
+        }
+
+        DragObj.prototype.Padding = function Padding(padding)
+        {
+            if (!padding)
+                return padding;
+
+            this.padding = padding;
+
+            this.elemt.style.padding = padding;
         }
     }
 )();

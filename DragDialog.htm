@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>DragDialog</title>
+    <script type="text/javascript" src="jWebForm.js"></script>
+    <script type="text/javascript" src="DragObj.js"></script>
+    <script type="text/javascript">
+
+        $j.Page_Load = function Page_Load() {
+
+            var div1 = document.getElementById("div1");
+
+            var drag1 = $j.DragObj(div1);
+
+            drag1.Width("400px");
+            drag1.Height("300px");
+
+            var divContent = document.getElementById("divContent");
+
+            drag1.NotDrag(divContent);  //  NotDrag() 方法用于设置元素不受拖拉影响
+
+            var spanClose = document.getElementById("spanClose");
+
+            spanClose.addEventListener("click", function () {
+                drag1.Close();
+            });
+
+            drag1.Show();
+
+        }
+    </script>
+
+</head>
+<body>
+
+    <div style="font-size:60px">
+        拖拖看<br />
+        可将鼠标放在对话框边缘调整对话框大小
+    </div>
+
+    <div id="div1" style="border: 1px solid gray; height: 100%; background-color:white ">
+        <table id="table1" style="width:100%; height:100%">
+            <tr>
+                <td style="height:1px">
+                    <div>标题<span id="spanClose" style="float:right">×</span></div>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding-bottom:10px">
+                    <div id="divContent" style="height: 100%; border-top: solid 1px gray; border-bottom: solid 1px gray">
+                        <br />这是正文
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    
+</body>
+</html>

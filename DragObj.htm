@@ -15,15 +15,25 @@
 
             drag1.Show();
 
+
             var div2 = document.getElementById("div2");
 
-            var drag2 = $j.DragObj(div2, "300px", "200px");
+            var drag2 = $j.DragObj(div2);
+
+            drag2.Left("300px");
+            drag2.Top("200px");
 
             drag2.Show();
 
+
             var div3 = document.getElementById("div3");
 
-            var drag3 = $j.DragObj(div3, "500px", "150px", "300px", "250px");
+            var drag3 = $j.DragObj(div3);
+
+            drag3.Left("500px");
+            drag3.Top("150px");
+            drag3.Width("300px");
+            drag3.Height("250px");
 
             drag3.Show();
 
