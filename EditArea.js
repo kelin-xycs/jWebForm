@@ -744,6 +744,11 @@
                 selectedSpanArray[i].myColor = color;
             }
         }
+
+        EditArea.prototype.GetText = function GetText()
+        {
+            return this.div.innerText;
+        }
     }
 )();
 

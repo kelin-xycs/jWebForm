@@ -1,3 +1,5 @@
+document.documentElement.setAttribute("ondragstart", "return false;");
+
 window.addEventListener("load", jwf$window_load);
 window.addEventListener("mousedown", jwf$window_mousedown);
 
@@ -188,7 +190,6 @@ function jwf$PictureBox(jelemt)
     elemt.style.width = this.width;
     elemt.style.height = this.height;
     elemt.style.border = "solid 1px lightblue";
-    elemt.setAttribute("ondragstart", "return false;");  // ∑¿÷πÕº∆¨Õœ∂Ø∏¥÷∆
 
 
     this.elemt = elemt;
