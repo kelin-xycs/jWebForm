@@ -4,6 +4,7 @@
     <title>Button</title>
     <link rel="stylesheet" type="text/css" href="jWebForm.css" />
     <script type="text/javascript" src="jWebForm.js"></script>
+    <script type="text/javascript" src="Button.js"></script>
     <script type="text/javascript">
 
         function btnEditWidth_Click() {
@@ -38,8 +39,7 @@
             alert(height);
         }
 
-        function Button1_Click(btn)
-        {
+        function Button1_Click(btn) {
             alert(btn.id + " Clicked .");
         }
 
@@ -48,18 +48,18 @@
 <body>
 
     <input type="text" id="txtWidth" value="500px" />
-    <j:Button text="修改 Button 宽度" OnClick="btnEditWidth_Click"></j:Button>
-    <j:Button text="显示 Button 宽度" OnClick="btnShowWidth_Click"></j:Button>
+    <j:Button text="修改 Button 宽度" Click="btnEditWidth_Click"></j:Button>
+    <j:Button text="显示 Button 宽度" Click="btnShowWidth_Click"></j:Button>
 
     <br />
 
     <input type="text" id="txtHeight" value="100px" />
-    <j:button Text="修改 Button 高度" OnClick="btnEditHeight_Click"></j:button>
-    <j:button text="显示 Button 高度" OnClick="btnShowHeight_Click"></j:button>
+    <j:button Text="修改 Button 高度" Click="btnEditHeight_Click"></j:button>
+    <j:button text="显示 Button 高度" Click="btnShowHeight_Click"></j:button>
 
     <br /><br />
 
-    <j:Button id="Button1" Text="Button1" OnClick="Button1_Click"></j:Button>
+    <j:Button id="Button1" Text="Button1" Click="Button1_Click"></j:Button>
     
 </body>
 </html>
