@@ -1,7 +1,7 @@
 (
     function ()
     {
-        jwf$ControlTypes["J:PICTUREBOX"] = PictureBox;
+        $j.RegisterControlType("J:PICTUREBOX", PictureBox);
 
         function PictureBox(jelemt)
         {
@@ -65,7 +65,7 @@
             return ctrl;
         }
 
-        PictureBox.prototype = new jwf$Control();
+        PictureBox.prototype = $j.Control();
 
         PictureBox.prototype.Width = function Width(width) {
             if (!width)

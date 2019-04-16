@@ -1,7 +1,7 @@
 (
     function ()
     {
-        jwf$ControlTypes["J:EDITAREA"] = EditArea;
+        $j.RegisterControlType("J:EDITAREA", EditArea);
 
         function EditArea(jelemt)
         {
@@ -128,7 +128,7 @@
             return ctrl;
         }
 
-        EditArea.prototype = new jwf$Control();
+        EditArea.prototype = $j.Control();
 
         EditArea.prototype.editAreaPadding = "20px";
         EditArea.prototype.txtBoxForInputTopOffset = 10;

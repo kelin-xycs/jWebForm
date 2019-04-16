@@ -1,7 +1,7 @@
 (
     function ()
     {
-        jwf$ControlTypes["J:DROPMENU"] = DropMenu;
+        $j.RegisterControlType("J:DROPMENU", DropMenu)
 
         function DropMenu(jelemt) {
             var elemt = document.createElement("div");
@@ -24,7 +24,7 @@
             return ctrl;
         }
 
-        DropMenu.prototype = new jwf$Control();
+        DropMenu.prototype = $j.Control();
 
         DropMenu.prototype.AddTopItem = function AddTopItem(topItem) {
             if (!topItem instanceof TopItem)
@@ -89,7 +89,8 @@
                 div.jwfObj.mousedownSelf = true;
             });
 
-            jwf$AddEventHandler_To_Frames_Window_MouseDown(function window_mousedown() {
+            //$j.AddEventHandler_To_Frames_Window_MouseDown(function window_mousedown() {
+            $j.addEventListener("mousedown", function window_mousedown() {
                 if (drop.jwfObj.mousedownSelf) {
                     drop.jwfObj.mousedownSelf = false;
                     return;

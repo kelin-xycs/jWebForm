@@ -73,13 +73,16 @@
                 div.resizeOriginalOffsetHeight = div.offsetHeight;
                 div.resizeOriginalOffsetLeft = div.offsetLeft;
                 div.resizeOriginalOffsetTop = div.offsetTop;
-                div.resizeMouseOriginalX = e.clientX;
-                div.resizeMouseOriginalY = e.clientY;
+                div.resizeMouseOriginalX = e.screenX;
+                div.resizeMouseOriginalY = e.screenY;
 
                 _resizingDiv = div;
 
-                window.addEventListener("mousemove", window_mousemoveForResize);
-                window.addEventListener("mouseup", window_mouseupForResize);
+                //  为了实现 跨 frame 的 全局事件，所以使用 $j.addEventListener(type, listener) 方法
+                //window.addEventListener("mousemove", window_mousemoveForResize);
+                //window.addEventListener("mouseup", window_mouseupForResize);
+                $j.addEventListener("mousemove", window_mousemoveForResize);
+                $j.addEventListener("mouseup", window_mouseupForResize);
 
                 document.documentElement.setAttribute("onselectstart", "return false;");
 
@@ -100,19 +103,25 @@
 
             _draggingDiv = div;
             
-            _offX = e.clientX - div.offsetLeft;
-            _offY = e.clientY - div.offsetTop;
+            _offX = e.screenX - div.offsetLeft;
+            _offY = e.screenY - div.offsetTop;
 
-            window.addEventListener("mouseup", window_mouseup);
-            window.addEventListener("mousemove", window_mousemove);
+            //  为了实现 跨 frame 的 全局事件，所以使用 $j.addEventListener(type, listener) 方法
+            //window.addEventListener("mouseup", window_mouseup);
+            //window.addEventListener("mousemove", window_mousemove);
+            $j.addEventListener("mouseup", window_mouseup);
+            $j.addEventListener("mousemove", window_mousemove);
 
             document.documentElement.setAttribute("onselectstart", "return false;");
         }
 
         function window_mouseup() {
 
-            window.removeEventListener("mouseup", window_mouseup);
-            window.removeEventListener("mousemove", window_mousemove);
+            //  为了实现 跨 frame 的 全局事件，所以使用 $j.addEventListener(type, listener) 方法
+            $j.removeEventListener("mouseup", window_mouseup);
+            $j.removeEventListener("mousemove", window_mousemove);
+            //window.removeEventListener("mouseup", window_mouseup);
+            //window.removeEventListener("mousemove", window_mousemove);
 
             document.documentElement.removeAttribute("onselectstart");
         }
@@ -123,8 +132,8 @@
             var div = _draggingDiv;
 
             div.style.position = "absolute";
-            div.style.top = (e.clientY - _offY) + "px";
-            div.style.left = (e.clientX - _offX) + "px";
+            div.style.top = (e.screenY - _offY) + "px";
+            div.style.left = (e.screenX - _offX) + "px";
 
             //document.selection.empty();
             //_txtFocusForNoSelection.focus();
@@ -140,8 +149,11 @@
 
             _resizingDiv = null;
 
-            window.removeEventListener("mousemove", window_mousemoveForResize);
-            window.removeEventListener("mouseup", window_mouseupForResize);
+            //  为了实现 跨 frame 的 全局事件，所以使用 $j.addEventListener(type, listener) 方法
+            $j.removeEventListener("mousemove", window_mousemoveForResize);
+            $j.removeEventListener("mouseup", window_mouseupForResize);
+            //window.removeEventListener("mousemove", window_mousemoveForResize);
+            //window.removeEventListener("mouseup", window_mouseupForResize);
 
             document.documentElement.removeAttribute("onselectstart");
         }
@@ -154,43 +166,43 @@
             var e = window.event;
 
             if (div.resizeOrientation == "RightBottom") {
-                div.style.width = (div.resizeOriginalOffsetWidth + (e.clientX - div.resizeMouseOriginalX)) + "px";
-                div.style.height = (div.resizeOriginalOffsetHeight + (e.clientY - div.resizeMouseOriginalY)) + "px";
+                div.style.width = (div.resizeOriginalOffsetWidth + (e.screenX - div.resizeMouseOriginalX)) + "px";
+                div.style.height = (div.resizeOriginalOffsetHeight + (e.screenY - div.resizeMouseOriginalY)) + "px";
             }
             else if (div.resizeOrientation == "LeftTop") {
-                div.style.width = (div.resizeOriginalOffsetWidth - (e.clientX - div.resizeMouseOriginalX)) + "px";
-                div.style.height = (div.resizeOriginalOffsetHeight - (e.clientY - div.resizeMouseOriginalY)) + "px";
+                div.style.width = (div.resizeOriginalOffsetWidth - (e.screenX - div.resizeMouseOriginalX)) + "px";
+                div.style.height = (div.resizeOriginalOffsetHeight - (e.screenY - div.resizeMouseOriginalY)) + "px";
                 div.style.left = (div.resizeOriginalOffsetLeft + (div.resizeOriginalOffsetWidth - div.offsetWidth)) + "px";
                 div.style.top = (div.resizeOriginalOffsetTop + (div.resizeOriginalOffsetHeight - div.offsetHeight)) + "px";
 
-                //div.style.left = (div.resizeOriginalOffsetLeft + (e.clientX - div.resizeMouseOriginalX)) + "px";
-                //div.style.top = (div.resizeOriginalOffsetTop + (e.clientY - div.resizeMouseOriginalY)) + "px";
+                //div.style.left = (div.resizeOriginalOffsetLeft + (e.screenX - div.resizeMouseOriginalX)) + "px";
+                //div.style.top = (div.resizeOriginalOffsetTop + (e.screenY - div.resizeMouseOriginalY)) + "px";
             }
             else if (div.resizeOrientation == "LeftBottom") {
-                div.style.width = (div.resizeOriginalOffsetWidth - (e.clientX - div.resizeMouseOriginalX)) + "px";
-                div.style.height = (div.resizeOriginalOffsetHeight + (e.clientY - div.resizeMouseOriginalY)) + "px";
+                div.style.width = (div.resizeOriginalOffsetWidth - (e.screenX - div.resizeMouseOriginalX)) + "px";
+                div.style.height = (div.resizeOriginalOffsetHeight + (e.screenY - div.resizeMouseOriginalY)) + "px";
                 div.style.left = (div.resizeOriginalOffsetLeft + (div.resizeOriginalOffsetWidth - div.offsetWidth)) + "px";
-                //div.style.top = (div.resizeOriginalOffsetTop + (e.clientY - div.resizeMouseOriginalY)) + "px";
+                //div.style.top = (div.resizeOriginalOffsetTop + (e.screenY - div.resizeMouseOriginalY)) + "px";
             }
             else if (div.resizeOrientation == "RightTop") {
-                div.style.width = (div.resizeOriginalOffsetWidth + (e.clientX - div.resizeMouseOriginalX)) + "px";
-                div.style.height = (div.resizeOriginalOffsetHeight - (e.clientY - div.resizeMouseOriginalY)) + "px";
-                //div.style.left = (div.resizeOriginalOffsetLeft + (e.clientX - div.resizeMouseOriginalX)) + "px";
+                div.style.width = (div.resizeOriginalOffsetWidth + (e.screenX - div.resizeMouseOriginalX)) + "px";
+                div.style.height = (div.resizeOriginalOffsetHeight - (e.screenY - div.resizeMouseOriginalY)) + "px";
+                //div.style.left = (div.resizeOriginalOffsetLeft + (e.screenX - div.resizeMouseOriginalX)) + "px";
                 div.style.top = (div.resizeOriginalOffsetTop + (div.resizeOriginalOffsetHeight - div.offsetHeight)) + "px";
             }
             else if (div.resizeOrientation == "Left") {
-                div.style.width = (div.resizeOriginalOffsetWidth - (e.clientX - div.resizeMouseOriginalX)) + "px";
+                div.style.width = (div.resizeOriginalOffsetWidth - (e.screenX - div.resizeMouseOriginalX)) + "px";
                 div.style.left = (div.resizeOriginalOffsetLeft + (div.resizeOriginalOffsetWidth - div.offsetWidth)) + "px";
             }
             else if (div.resizeOrientation == "Right") {
-                div.style.width = (div.resizeOriginalOffsetWidth + (e.clientX - div.resizeMouseOriginalX)) + "px";
+                div.style.width = (div.resizeOriginalOffsetWidth + (e.screenX - div.resizeMouseOriginalX)) + "px";
             }
             else if (div.resizeOrientation == "Top") {
-                div.style.height = (div.resizeOriginalOffsetHeight - (e.clientY - div.resizeMouseOriginalY)) + "px";
+                div.style.height = (div.resizeOriginalOffsetHeight - (e.screenY - div.resizeMouseOriginalY)) + "px";
                 div.style.top = (div.resizeOriginalOffsetTop + (div.resizeOriginalOffsetHeight - div.offsetHeight)) + "px";
             }
             else if (div.resizeOrientation == "Bottom") {
-                div.style.height = (div.resizeOriginalOffsetHeight + (e.clientY - div.resizeMouseOriginalY)) + "px";
+                div.style.height = (div.resizeOriginalOffsetHeight + (e.screenY - div.resizeMouseOriginalY)) + "px";
             }
 
             

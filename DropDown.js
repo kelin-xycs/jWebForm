@@ -1,7 +1,8 @@
 (
     function()
     {
-        jwf$ControlTypes["J:DROPDOWN"] = DropDown;
+
+        $j.RegisterControlType("J:DROPDOWN", DropDown);
 
         function DropDown(jelemt)
         {
@@ -63,16 +64,24 @@
                 }
             );
 
-            jwf$AddEventHandler_To_Frames_Window_MouseDown(function jwf$DropDownList$window_mousedown()
-            {
-                if (ctrl.isMouseDownSelf)
-                {
+            $j.addEventListener("mousedown", function window_mousedown() {
+                if (ctrl.isMouseDownSelf) {
                     ctrl.isMouseDownSelf = false;
                     return;
                 }
 
                 drop.style.display = "none";
             });
+            //jwf$AddEventHandler_To_Frames_Window_MouseDown(function jwf$DropDownList$window_mousedown()
+            //{
+            //    if (ctrl.isMouseDownSelf)
+            //    {
+            //        ctrl.isMouseDownSelf = false;
+            //        return;
+            //    }
+
+            //    drop.style.display = "none";
+            //});
         }
 
         window.$j.DropDown = CreateDropDown;
@@ -88,7 +97,7 @@
             return ctrl;
         }
 
-        DropDown.prototype = new jwf$Control();
+        DropDown.prototype = $j.Control();
 
         DropDown.prototype.Top = function Top(topElement) {
             var top = this.top;

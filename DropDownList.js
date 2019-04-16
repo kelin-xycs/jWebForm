@@ -1,7 +1,7 @@
 (
     function()
     {
-        jwf$ControlTypes["J:DROPDOWNLIST"] = DropDownList;
+        $j.RegisterControlType("J:DROPDOWNLIST", DropDownList);
 
         function DropDownList(jelemt) {
             if (jelemt) {
@@ -66,7 +66,7 @@
             return ctrl;
         }
 
-        DropDownList.prototype = new jwf$Control();
+        DropDownList.prototype = $j.Control();
 
         DropDownList.prototype.Width = function Width(width) {
             if (!width)

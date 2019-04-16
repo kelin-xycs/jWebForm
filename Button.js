@@ -1,7 +1,7 @@
 (
     function ()
     {
-        jwf$ControlTypes["J:BUTTON"] = Button;
+        $j.RegisterControlType("J:BUTTON", Button);
 
         function Button(jelemt)
         {
@@ -91,7 +91,7 @@
             return ctrl;
         }
 
-        Button.prototype = new jwf$Control();
+        Button.prototype = $j.Control();
 
         Button.prototype.Width = function Width(width)
         {
