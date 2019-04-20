@@ -1,9 +1,9 @@
 (
     function ()
     {
-        window.$j.DragObj = function CreateDragObj(contentElement, width, height)
+        window.$j.DragObj = function CreateDragObj(contentElement)
         {
-            return new DragObj(contentElement, width, height);
+            return new DragObj(contentElement);
         }
 
         function DragObj(contentElement)
@@ -126,9 +126,9 @@
             document.documentElement.removeAttribute("onselectstart");
         }
 
-        function window_mousemove() {
+        function window_mousemove(e) {
             
-            var e = window.event;
+            //var e = window.event;
             var div = _draggingDiv;
 
             div.style.position = "absolute";
@@ -158,12 +158,12 @@
             document.documentElement.removeAttribute("onselectstart");
         }
 
-        function window_mousemoveForResize()
+        function window_mousemoveForResize(e)
         {
             
             var div = _resizingDiv;
 
-            var e = window.event;
+            //var e = window.event;
 
             if (div.resizeOrientation == "RightBottom") {
                 div.style.width = (div.resizeOriginalOffsetWidth + (e.screenX - div.resizeMouseOriginalX)) + "px";
@@ -282,11 +282,15 @@
 
         }
 
+
+        DragObj.prototype = $j.Control();
+
         DragObj.prototype.Show = function Show()
         {
             var elemt = this.elemt;
 
-            elemt.appendChild(this.contentElement);
+            if (this.contentElement)
+                elemt.appendChild(this.contentElement);
 
             document.documentElement.appendChild(elemt);
         }
@@ -301,7 +305,8 @@
         {
             var ctrl = this;
 
-            notDragElement.style.cursor = "auto";
+            if (notDragElement.style.cursor == "") 
+                notDragElement.style.cursor = "auto";
 
             notDragElement.addEventListener("mousedown", function () {
                 ctrl.isNotDrag = true;

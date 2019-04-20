@@ -153,6 +153,34 @@
             return new Control();
         }
 
+        $j.getElementById = function getElementById(containerElement, id)
+        {
+            
+            var child = containerElement.firstElementChild;
+
+            if (!child)
+                return null;
+
+            while (true)
+            {
+                if (child.id == id)
+                    return child;
+
+                
+
+                var temp = getElementById(child, id);
+
+                if (temp)
+                    return temp;
+                
+                if (!child.nextElementSibling)
+                    break;
+
+                child = child.nextElementSibling;
+            }
+
+            return null;
+        }
 
         //var window_mousedown$handlers = [];
 
@@ -198,7 +226,7 @@
         //    }
         //}
 
-        function RaiseEvent(handlers)
+        function RaiseEvent(handlers, e)
         {
             handlers.MoveToStart();
 
@@ -206,7 +234,7 @@
             {
                 var handler = handlers.Current().value;
 
-                handler();
+                handler(e);
             }
         }
 
@@ -214,35 +242,34 @@
             if (win.parent == win)
                 return win;
 
-            return GetTopWindow(win);
+            return GetTopWindow(win.parent);
         }
-
 
 
         function RegisterFrame(win)
         {
-            top.addEventListener("mousedown", frame_mousedown);
-            top.addEventListener("mousemove", frame_mousemove);
-            top.addEventListener("mouseup", frame_mouseup);
+            win.addEventListener("mousedown", frame_mousedown);
+            win.addEventListener("mousemove", frame_mousemove);
+            win.addEventListener("mouseup", frame_mouseup);
         }
 
-        function frame_mousedown()
+        function frame_mousedown(e)
         {
             var handlers = top.jwf$frameEvents["mousedown"];
 
-            RaiseEvent(handlers);
+            RaiseEvent(handlers, e);
         }
 
-        function frame_mousemove() {
+        function frame_mousemove(e) {
             var handlers = top.jwf$frameEvents["mousemove"];
 
-            RaiseEvent(handlers);
+            RaiseEvent(handlers, e);
         }
 
-        function frame_mouseup() {
+        function frame_mouseup(e) {
             var handlers = top.jwf$frameEvents["mouseup"];
 
-            RaiseEvent(handlers);
+            RaiseEvent(handlers, e);
         }
         //function AddEventHandler_To_Frames_Window_MouseDown(handler) {
         //    window_mousedown$handlers[window_mousedown$handlers.length] = handler;

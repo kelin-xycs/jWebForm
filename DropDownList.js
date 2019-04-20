@@ -32,6 +32,7 @@
 
             var text = document.createElement("div");
 
+            text.style.boxSizing = "border-box";
             text.style.width = this.width;
             text.style.height = this.height;
             text.style.border = "solid 1px lightblue";
@@ -43,9 +44,11 @@
 
 
             var list = document.createElement("div");
+            list.style.boxSizing = "border-box";
             list.style.width = this.width;
-            list.style.border = "solid 1px gray";
+            list.style.border = "solid 1px lightblue";
             list.style.backgroundColor = "white";
+            list.style.cursor = "default";
 
             dropDown.Drop(list);
 
