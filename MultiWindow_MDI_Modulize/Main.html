@@ -1,0 +1,150 @@
+﻿<!DOCTYPE html style="">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Main</title>
+    <link rel="stylesheet" type="text/css" href="../jWebForm.css" />
+    <script type="text/javascript" src="../jWebForm.js"></script>
+    <script type="text/javascript" src="../DragObj.js"></script>
+    <script type="text/javascript" src="../EditArea.js"></script>
+    
+    <script type="text/javascript" src="../DropMenu.js"></script>
+    <script type="text/javascript">
+
+        $j.Page_Load = function Page_Load() {
+
+            BindMenu();
+
+            var editArea = $j("EditArea1");
+
+            editArea.Init();
+        }
+      
+        function BindMenu() {
+            var dropMenu = $j("DropMenu1");
+
+            var topItem = $j.DropMenu.TopItem("文件");
+
+            var subItem = $j.DropMenu.SubItem("保存", function () { Cef.OpenSaveFileDialog(); });
+            topItem.AddSubItem(subItem);
+
+            subItem = $j.DropMenu.SubItem("aaaaaaaaaaaaaaa", function () { alert("aaaaaaaaaaaaaaa"); });
+            topItem.AddSubItem(subItem);
+
+            subItem = $j.DropMenu.SubItem("bbbbbbbbbbbbbbbbbbb", function () { alert("bbbbbbbbbbbbbbbbbbb"); });
+            topItem.AddSubItem(subItem);
+
+            dropMenu.AddTopItem(topItem);
+
+
+            topItem = $j.DropMenu.TopItem("工具");
+
+            subItem = $j.DropMenu.SubItem("选项", OpenOptionsDialog);
+            topItem.AddSubItem(subItem);
+
+            subItem = $j.DropMenu.SubItem("ccccccccccccccc", function () { alert("ccccccccccccccc"); });
+            topItem.AddSubItem(subItem);
+
+            dropMenu.AddTopItem(topItem);
+        }
+
+        function SaveFile(file) {
+
+            var editArea = $j("EditArea1");
+
+            var text = editArea.GetText();
+
+            alert("Saving text : " + text);
+        }
+
+        function OpenOptionsDialog() {
+            if (window.dragOptions) {
+                dragOptions.Show();
+                return;
+            }
+
+            var drag = $j.DragObj();
+
+            drag.Width("400px");
+            drag.Height("300px");
+            drag.MinWidth("400px");
+            drag.MinHeight("300px");
+
+            var divDialog = document.getElementById("divDialog");
+
+            var elemt = drag.Element();
+
+            elemt.innerHTML = divDialog.outerHTML;
+
+            var spanClose = $j.getElementById(elemt, "spanClose");
+
+            spanClose.addEventListener("click", function () {
+                drag.Close();
+            });
+
+            drag.NotDrag(spanClose);
+
+
+            var ifr = $j.getElementById(elemt, "ifrContent");
+            ifr.src = "Options.html";
+
+
+            drag.Show();
+
+            window.dragOptions = drag;
+        }
+
+        
+
+    </script>
+</head>
+<body>
+    <div>
+        *  因为 Chrome 默认不允许 本地文件 跨 frame 访问，所以直接打开 html 会发生错误 “Blocked a frame with origin "null" from accessing a cross-origin frame.”，
+        导致运行不正常。 解决办法 是 在 启动 Chrome 时加上启动参数 “--allow-file-access-from-files”，可以在 快捷方式 里加入这个参数，具体可以百度一下。
+        或者把 Html 放到一个 Web 目录下，用 Web Url 访问，
+        又或者用 EPWA 来查看，有关 EPWA，见 《我发起并创立了一个 EPWA 的 开源项目》 <a href="https://www.cnblogs.com/KSongKing/p/10745935.html" target="_blank">https://www.cnblogs.com/KSongKing/p/10745935.html</a>
+        <br /><br />
+        *  以下是示例
+        <br /><br />
+    </div>
+    <table style="height:100%; width:100%">
+        <tr>
+            <td style="height:1px; border-bottom:solid 1px gray">
+                <j:DropMenu id="DropMenu1"></j:DropMenu>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div id="divEditArea" style="overflow-y:auto; height:100%;">
+                    <j:EditArea id="EditArea1" MinHeight="100%"></j:EditArea>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <div id="divTemplates" style="display:none">
+
+        <!--<div id="divDialog" style="border: 1px solid gray; padding:5px; height: 100%; background-color:white ; display:flex; flex-flow:column">-->
+        <div id="divDialog" style="box-sizing:border-box; border: 1px solid gray; padding:5px; padding-bottom:10px; height: 100%; background-color:white ;">
+            <table id="table1" style="width:100%; height:100%;">
+                <tr>
+                    <td style="height:1px; padding-bottom:5px; border-bottom:solid 1px gray">
+                        <div>选项<span id="spanClose" style="float:right; cursor:default">×</span></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border-bottom:solid 1px gray">
+                        <iframe id="ifrContent" style="border:0px; width:100%; height:100%"></iframe>
+                    </td>
+                </tr>
+            </table>
+            <!--<div style="padding:5px">选项<span id="spanClose" style="float:right;">×</span></div>
+        <iframe id="ifrContent" style="border:solid 1px blue; flex:1 "></iframe>-->
+        </div>
+       
+    </div>
+
+</body>
+</html>
