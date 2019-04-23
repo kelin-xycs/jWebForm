@@ -104,7 +104,17 @@
         *  因为 Chrome 默认不允许 本地文件 跨 frame 访问，所以直接打开 html 会发生错误 “Blocked a frame with origin "null" from accessing a cross-origin frame.”，
         导致运行不正常。 解决办法 是 在 启动 Chrome 时加上启动参数 “--allow-file-access-from-files”，可以在 快捷方式 里加入这个参数，具体可以百度一下。
         或者把 Html 放到一个 Web 目录下，用 Web Url 访问，
-        又或者用 EPWA 来查看，有关 EPWA，见 《我发起并创立了一个 EPWA 的 开源项目》 <a href="https://www.cnblogs.com/KSongKing/p/10745935.html" target="_blank">https://www.cnblogs.com/KSongKing/p/10745935.html</a>
+        又或者用 EPWA 来查看，有关 EPWA，见 《我发起并创立了一个 EPWA 的 开源项目》
+        <span style="color:deepskyblue">
+            <a target="_blank" href="https://www.cnblogs.com/KSongKing/p/10745935.html">https://www.cnblogs.com/KSongKing/p/10745935.html</a>
+            请把这个网址自己拷贝下来放到浏览器里查看，
+        </span>
+        因为 Cef 现在有个 Bug ，就是超链接的 target = "_blank" 的话，点击链接弹出窗口打开网页后，再关闭网页窗口，
+        然后整个程序就再也打不开各种窗口了，包括 Dev Tools， 点击“保存”菜单时弹出的 FileDialog， 对话框（MessageBox.Show()）。
+        本来到 GitLab 上去提个 Issue，又注册不了账号，说是“There was an error with the reCAPTCHA. Please solve the reCAPTCHA again.”，
+        当然如果是在 浏览器 而不是 Cef 里查看这个网页的话，就没有这个问题，但是上面提到为了避免 Chrome 默认不允许 本地文件 跨 frame 访问的问题，
+        有一种方法是把这个网页放到 EPWA（Cef）里查看，所以把这个问题记录下来。另外就是这个问题是一个 Issue ，先记录在这里，等之后再到 GitLab 上提，
+        这个问题不解决，影响 Cef 正常使用。
         <br /><br />
         *  以下是示例
         <br /><br />

@@ -1,4 +1,4 @@
-(
+ï»¿(
     function ()
     {
         $j.RegisterControlType("J:EDITAREA", EditArea);
@@ -368,7 +368,7 @@
             if (editArea.isDivMouseDown == false)
                 return;
 
-            //  ÅĞ¶ÏÊÇ²»ÊÇ mousedown Ê±ºòµÄ mousemove ÊÂ¼ş£¬Èç¹ûÊÇÔò²»½øĞĞ À­Ñ¡ ²Ù×÷
+            //  åˆ¤æ–­æ˜¯ä¸æ˜¯ mousedown æ—¶å€™çš„ mousemove äº‹ä»¶ï¼Œå¦‚æœæ˜¯åˆ™ä¸è¿›è¡Œ æ‹‰é€‰ æ“ä½œ
             if (editArea.isMouseMoveInMouseDown == true) {
                 editArea.isMouseMoveInMouseDown = false;
                 return;

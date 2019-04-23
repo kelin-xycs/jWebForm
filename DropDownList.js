@@ -1,4 +1,4 @@
-(
+﻿(
     function()
     {
         $j.RegisterControlType("J:DROPDOWNLIST", DropDownList);
@@ -36,7 +36,7 @@
             text.style.width = this.width;
             text.style.height = this.height;
             text.style.border = "solid 1px lightblue";
-            text.innerHTML = "&nbsp;";    //  Ԥ�ȸ� text div ��ֵһ���ı������� DropDownList �������ı�����һ��ʱ�����뷽ʽ����ͳһ��û���ı��� inline-block �� div ����Աߵ��ı���һ�㣬��һ��ѡ�� item �� text div ��ֵ�ı�ʱ����Աߵ��ı����룬��ʱ text div �����һ�����µ�С�ƶ�
+            text.innerHTML = "&nbsp;";    //  预先给 text div 赋值一个文本，这样 DropDownList 和其它文本放在一起时，对齐方式可以统一。没有文本的 inline-block 的 div 会比旁边的文本高一点，第一次选择 item 给 text div 赋值文本时会和旁边的文本对齐，此时 text div 会产生一个向下的小移动
 
             dropDown.Top(text);
 
@@ -112,7 +112,7 @@
 
                         text.innerHTML = item.innerHTML;
                         
-                        //  ��� ��ʱ ��ʵҲ���Բ��üӣ�����ʱ�Ļ�����Ч�����һ�㣬���ӵĻ���������ʧ��̫���ˣ���Ȼ����������˶��� :)
+                        //  这个 延时 其实也可以不用加，加延时的话体验效果会好一点，不加的话下拉框消失的太快了，当然这个看法因人而异 :)
                         window.setTimeout(
                             function jwf$DropDownList$ItemClickCloseDrop() {
                                 ctrl.dropDown.Close();

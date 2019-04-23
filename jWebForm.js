@@ -1,4 +1,4 @@
-(
+ï»¿(
     function ()
     {
         document.documentElement.setAttribute("ondragstart", "return false;");
@@ -6,30 +6,30 @@
         window.addEventListener("load", window_load);
         //window.addEventListener("mousedown", window_mousedown);
 
-        /* Õâ²¿·ÖÊÇ ÎªÁË½â¾ö window mousedown ÊÂ¼ş ÔÚ iframe Àï ²»Æğ×÷ÓÃ µÄ ÎÊÌâ
-           iframe ÊÇÒ»¸ö ¶ÀÁ¢µÄ window £¬ µã»÷ iframe ÄÚÈİÖ»»á´¥·¢ iframe ´°¿Ú×Ô¼ºµÄ mousedown ÊÂ¼ş
-           ÕâÑù¾Íµ¼ÖÂ Ö÷´°¿Ú µÄ DropDown DropDownList DropMenu µÈ ¿Ø¼ş ²»ÄÜÀûÓÃ window mousedown ÊÂ¼ş ¹Ø±Õ ÏÂÀ­¿ò ÏÂÀ­²Ëµ¥
-           Ê¹ÓÃ·½·¨ ÊÇ£º
+        /* è¿™éƒ¨åˆ†æ˜¯ ä¸ºäº†è§£å†³ window mousedown äº‹ä»¶ åœ¨ iframe é‡Œ ä¸èµ·ä½œç”¨ çš„ é—®é¢˜
+           iframe æ˜¯ä¸€ä¸ª ç‹¬ç«‹çš„ window ï¼Œ ç‚¹å‡» iframe å†…å®¹åªä¼šè§¦å‘ iframe çª—å£è‡ªå·±çš„ mousedown äº‹ä»¶
+           è¿™æ ·å°±å¯¼è‡´ ä¸»çª—å£ çš„ DropDown DropDownList DropMenu ç­‰ æ§ä»¶ ä¸èƒ½åˆ©ç”¨ window mousedown äº‹ä»¶ å…³é—­ ä¸‹æ‹‰æ¡† ä¸‹æ‹‰èœå•
+           ä½¿ç”¨æ–¹æ³• æ˜¯ï¼š
         
-            1 jWebForm ¿Ø¼ş Ê¹ÓÃ jwf$AddEventHandler_To_Frames_Window_MouseDown(handler) ·½·¨ À´ Ìí¼Ó window mousedown ÊÂ¼ş 
-              ´úÌæ window.addEventListener("mousedown", function xxx());
+            1 jWebForm æ§ä»¶ ä½¿ç”¨ jwf$AddEventHandler_To_Frames_Window_MouseDown(handler) æ–¹æ³• æ¥ æ·»åŠ  window mousedown äº‹ä»¶ 
+              ä»£æ›¿ window.addEventListener("mousedown", function xxx());
         
-            2 ¿ª·¢ÈËÔ± Ó¦¸ºÔğ °Ñ $j.Frame_Window_MouseDown Ìí¼Óµ½ iframe µÄ window mousedown ÊÂ¼ş£¬ÈçÏÂ£º
+            2 å¼€å‘äººå‘˜ åº”è´Ÿè´£ æŠŠ $j.Frame_Window_MouseDown æ·»åŠ åˆ° iframe çš„ window mousedown äº‹ä»¶ï¼Œå¦‚ä¸‹ï¼š
         
               var ifr = document.getElementById("ifr");
               ifr.contentWindow.addEventListener("mousedown", $j.Frame_Window_MouseDown);
         
-            µ±È»£¬µÚ 2 ²½ ²»ÊÇ±ØĞëµÄ£¬Èç¹û²»×ö µÚ 2 ²½£¬ÄÇÃ´£¬jWebForm ¾Í²»ÖªµÀ µã»÷ iframe µÄÊÂ¼ş·¢Éú£¬
-            µ¼ÖÂµÄĞ§¹û¾ÍÊÇ ±ÈÈç µã»÷ iframe Ê± Ö÷´°¿Ú ÀïµÄ DropDown DropDownList DropMenu µÄ ÏÂÀ­¿ò ÏÂÀ­²Ëµ¥ ²»»á¹Ø±Õ
-            µ±È»Õâ²»Ò»¶¨ÊÇÎÊÌâ£¬ÓĞÊ±ºòÕâÑùµÄĞ§¹ûÒ²ÊÇ¿ÉÒÔ½ÓÊÜµÄ£¬ÉõÖÁÓĞÊ±ºòÒªµÄ¾ÍÊÇÕâÖÖĞ§¹û¡£ ^^
+            å½“ç„¶ï¼Œç¬¬ 2 æ­¥ ä¸æ˜¯å¿…é¡»çš„ï¼Œå¦‚æœä¸åš ç¬¬ 2 æ­¥ï¼Œé‚£ä¹ˆï¼ŒjWebForm å°±ä¸çŸ¥é“ ç‚¹å‡» iframe çš„äº‹ä»¶å‘ç”Ÿï¼Œ
+            å¯¼è‡´çš„æ•ˆæœå°±æ˜¯ æ¯”å¦‚ ç‚¹å‡» iframe æ—¶ ä¸»çª—å£ é‡Œçš„ DropDown DropDownList DropMenu çš„ ä¸‹æ‹‰æ¡† ä¸‹æ‹‰èœå• ä¸ä¼šå…³é—­
+            å½“ç„¶è¿™ä¸ä¸€å®šæ˜¯é—®é¢˜ï¼Œæœ‰æ—¶å€™è¿™æ ·çš„æ•ˆæœä¹Ÿæ˜¯å¯ä»¥æ¥å—çš„ï¼Œç”šè‡³æœ‰æ—¶å€™è¦çš„å°±æ˜¯è¿™ç§æ•ˆæœã€‚ ^^
         
-           ÍÆ¶ø¹ãÖ®£¬Èç¹ûÒ»¸öÒ³ÃæÖĞ°üº¬¶à¸ö iframe£¬ iframe Ò²ÓĞÇ¶Ì×£¬ÄÇÃ´Ò²ÊÊÓÃÉÏÊöµÄ×ö·¨£¬
-           ÎÒÃÇ°Ñ Ö÷´°¿Ú ºÍ iframe ¶¼¿´×÷ÊÇÒ»¸ö frame£¬
-           ¼ÙÉèÒ»¸ö Ò³Ãæ ÖĞÓĞ n ¸ö frame£¬
-           ¿ª·¢ÈËÔ± ÔÚ A frame ÖĞÊ¹ÓÃÁË jWebForm ¿Ø¼ş£¬
-           Ôò¿ÉÒÔÑ¡Ôñ½« A frame µÄ $j.Frame_Window_MouseDown Ìí¼Óµ½ ÆäËüµÄÈÎÒâµÄ frame µÄ window mousedown ÊÂ¼ş¡£
-           ÔÚ B frame £¬ C frame ¡­¡­ ÖĞ Ê¹ÓÃÁË jWebForm ¿Ø¼şÒàÈ»£¬ÒÀ´ËÀàÍÆ¡£
-           ¿ÉÒÔÍ¬Ê±ÔÚ¶à¸ö frame ÖĞÍ¬Ê±Ê¹ÓÃ jWebForm ¿Ø¼ş¡£
+           æ¨è€Œå¹¿ä¹‹ï¼Œå¦‚æœä¸€ä¸ªé¡µé¢ä¸­åŒ…å«å¤šä¸ª iframeï¼Œ iframe ä¹Ÿæœ‰åµŒå¥—ï¼Œé‚£ä¹ˆä¹Ÿé€‚ç”¨ä¸Šè¿°çš„åšæ³•ï¼Œ
+           æˆ‘ä»¬æŠŠ ä¸»çª—å£ å’Œ iframe éƒ½çœ‹ä½œæ˜¯ä¸€ä¸ª frameï¼Œ
+           å‡è®¾ä¸€ä¸ª é¡µé¢ ä¸­æœ‰ n ä¸ª frameï¼Œ
+           å¼€å‘äººå‘˜ åœ¨ A frame ä¸­ä½¿ç”¨äº† jWebForm æ§ä»¶ï¼Œ
+           åˆ™å¯ä»¥é€‰æ‹©å°† A frame çš„ $j.Frame_Window_MouseDown æ·»åŠ åˆ° å…¶å®ƒçš„ä»»æ„çš„ frame çš„ window mousedown äº‹ä»¶ã€‚
+           åœ¨ B frame ï¼Œ C frame â€¦â€¦ ä¸­ ä½¿ç”¨äº† jWebForm æ§ä»¶äº¦ç„¶ï¼Œä¾æ­¤ç±»æ¨ã€‚
+           å¯ä»¥åŒæ—¶åœ¨å¤šä¸ª frame ä¸­åŒæ—¶ä½¿ç”¨ jWebForm æ§ä»¶ã€‚
         */
         
 
@@ -75,8 +75,8 @@
             }
         }
 
-        // ÒòÎª document  document.documentElement  document.body µÄ getElementsByTagNameNS() ·½·¨²»Æğ×÷ÓÃ£¬
-        // ·µ»Ø ¿Õ¼¯ºÏ£¬ËùÒÔÖ»ÄÜµİ¹é±éÀúÀ´²éÕÒ jWebForm£¨j:£© ÔªËØ¡£
+        // å› ä¸º document  document.documentElement  document.body çš„ getElementsByTagNameNS() æ–¹æ³•ä¸èµ·ä½œç”¨ï¼Œ
+        // è¿”å› ç©ºé›†åˆï¼Œæ‰€ä»¥åªèƒ½é€’å½’éå†æ¥æŸ¥æ‰¾ jWebFormï¼ˆj:ï¼‰ å…ƒç´ ã€‚
         function GetJwfElements(elemts, elemt) {
             var s = elemt.nodeName.substring(0, 2);
             if (elemt.nodeName.substring(0, 2) == "J:") {
@@ -112,7 +112,7 @@
             var ctor = controlTypes[jelemt.nodeName];
 
             if (!ctor)
-                throw "Î´×¢²áµÄ nodeName £º\"" + jelemt.nodeName + "\"£¬ÇëÊ¹ÓÃ RegisterControlType(nodeName, type) ×¢²á ¡£";
+                throw "æœªæ³¨å†Œçš„ nodeName ï¼š\"" + jelemt.nodeName + "\"ï¼Œè¯·ä½¿ç”¨ RegisterControlType(nodeName, type) æ³¨å†Œ ã€‚";
 
             return new ctor(jelemt);
 
@@ -133,7 +133,7 @@
             //    return new jwf$DropMenu(jelemt);
             //}
 
-            //throw "ÎŞĞ§µÄ nodeName £º\"" + jelemt.nodeName + "\" ¡£";
+            //throw "æ— æ•ˆçš„ nodeName ï¼š\"" + jelemt.nodeName + "\" ã€‚";
         }
 
         function Control() {
@@ -184,17 +184,17 @@
 
         //var window_mousedown$handlers = [];
 
-        //  ÎªÁËÊµÏÖ ¿ç frame µÄ È«¾ÖÊÂ¼ş£¬ËùÒÔÊ¹ÓÃ $j.addEventListener(type, listener) ·½·¨
-        //  ÎªÁËÈÃ È«¾ÖÊÂ¼ş ÉúĞ§£¬ĞèÒªµ÷ÓÃ $j.RegisterFrame(win) ·½·¨½« frame window ×¢²áµ½ $j
-        //  ÒıÓÃÁË jWebForm.js µÄÒ³Ãæ»á×Ô¶¯µ÷ÓÃ $j.RegisterFrame(win) ½«µ±Ç° window ×¢²áµ½ $j
-        //  Î´ÒıÓÃ jWebForm.js µÄ frame Ò³ÃæĞèÒªÊÖ¶¯µ÷ÓÃ $j.RegisterFrame(win) ½« frame window ×¢²áµ½ $j
-        //  $j.RegisterFrame(win) ·½·¨¿ÉÒÔÔÚÈÎºÎ frame ÖĞµ÷ÓÃ£¬¸Ã·½·¨»áÕÒµ½ ¶¥²ã´°¿Ú£¨top window£©£¬½« ×¢²áĞÅÏ¢ ±£´æÔÚ top window
+        //  ä¸ºäº†å®ç° è·¨ frame çš„ å…¨å±€äº‹ä»¶ï¼Œæ‰€ä»¥ä½¿ç”¨ $j.addEventListener(type, listener) æ–¹æ³•
+        //  ä¸ºäº†è®© å…¨å±€äº‹ä»¶ ç”Ÿæ•ˆï¼Œéœ€è¦è°ƒç”¨ $j.RegisterFrame(win) æ–¹æ³•å°† frame window æ³¨å†Œåˆ° $j
+        //  å¼•ç”¨äº† jWebForm.js çš„é¡µé¢ä¼šè‡ªåŠ¨è°ƒç”¨ $j.RegisterFrame(win) å°†å½“å‰ window æ³¨å†Œåˆ° $j
+        //  æœªå¼•ç”¨ jWebForm.js çš„ frame é¡µé¢éœ€è¦æ‰‹åŠ¨è°ƒç”¨ $j.RegisterFrame(win) å°† frame window æ³¨å†Œåˆ° $j
+        //  $j.RegisterFrame(win) æ–¹æ³•å¯ä»¥åœ¨ä»»ä½• frame ä¸­è°ƒç”¨ï¼Œè¯¥æ–¹æ³•ä¼šæ‰¾åˆ° é¡¶å±‚çª—å£ï¼ˆtop windowï¼‰ï¼Œå°† æ³¨å†Œä¿¡æ¯ ä¿å­˜åœ¨ top window
         $j.addEventListener = function addEventListener(type, listener) {
 
             var handlers = top.jwf$frameEvents[type];
 
             if (!handlers)
-                throw "ÉĞÎ´Ö§³Ö \"" + type + "\" ÊÂ¼ş ¡£";
+                throw "å°šæœªæ”¯æŒ \"" + type + "\" äº‹ä»¶ ã€‚";
 
             handlers.Add(listener);
         }

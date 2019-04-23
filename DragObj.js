@@ -1,4 +1,4 @@
-(
+ï»¿(
     function ()
     {
         window.$j.DragObj = function CreateDragObj(contentElement)
@@ -61,9 +61,9 @@
             var div = ctrl.elemt;
 
 
-            //  ÅĞ¶ÏÊó±êÊÇ·ñÔÚ div ±ßÔµ¿Éµ÷Õû´óĞ¡µÄÎ»ÖÃ¡£ 
-            //  Õâ¸öÔÚ div µÄ mousemove ÊÂ¼şÀï»áÅĞ¶Ï£¬µ«ÊÇÓĞ¿ÉÄÜÉÏÒ»´ÎÓÃÊó±êµ÷Õû´óĞ¡ºóÊó±êÎ´ÒÆ¶¯ÓÖ¼ÌĞøµã»÷£¬´ËÊ±Ó¦¸ÃÄÜ¼ÌĞøµ÷Õû´óĞ¡£¬
-            //  ËùÒÔĞèÒªÔÚ Êó±ê µã»÷ Ê±Ò²ÅĞ¶ÏÊó±êÊÇ·ñÔÚ div ±ßÔµ¿Éµ÷Õû´óĞ¡µÄÎ»ÖÃ
+            //  åˆ¤æ–­é¼ æ ‡æ˜¯å¦åœ¨ div è¾¹ç¼˜å¯è°ƒæ•´å¤§å°çš„ä½ç½®ã€‚ 
+            //  è¿™ä¸ªåœ¨ div çš„ mousemove äº‹ä»¶é‡Œä¼šåˆ¤æ–­ï¼Œä½†æ˜¯æœ‰å¯èƒ½ä¸Šä¸€æ¬¡ç”¨é¼ æ ‡è°ƒæ•´å¤§å°åé¼ æ ‡æœªç§»åŠ¨åˆç»§ç»­ç‚¹å‡»ï¼Œæ­¤æ—¶åº”è¯¥èƒ½ç»§ç»­è°ƒæ•´å¤§å°ï¼Œ
+            //  æ‰€ä»¥éœ€è¦åœ¨ é¼ æ ‡ ç‚¹å‡» æ—¶ä¹Ÿåˆ¤æ–­é¼ æ ‡æ˜¯å¦åœ¨ div è¾¹ç¼˜å¯è°ƒæ•´å¤§å°çš„ä½ç½®
             div_mousemoveForResize(ctrl);
 
 
@@ -78,7 +78,7 @@
 
                 _resizingDiv = div;
 
-                //  ÎªÁËÊµÏÖ ¿ç frame µÄ È«¾ÖÊÂ¼ş£¬ËùÒÔÊ¹ÓÃ $j.addEventListener(type, listener) ·½·¨
+                //  ä¸ºäº†å®ç° è·¨ frame çš„ å…¨å±€äº‹ä»¶ï¼Œæ‰€ä»¥ä½¿ç”¨ $j.addEventListener(type, listener) æ–¹æ³•
                 //window.addEventListener("mousemove", window_mousemoveForResize);
                 //window.addEventListener("mouseup", window_mouseupForResize);
                 $j.addEventListener("mousemove", window_mousemoveForResize);
@@ -106,7 +106,7 @@
             _offX = e.screenX - div.offsetLeft;
             _offY = e.screenY - div.offsetTop;
 
-            //  ÎªÁËÊµÏÖ ¿ç frame µÄ È«¾ÖÊÂ¼ş£¬ËùÒÔÊ¹ÓÃ $j.addEventListener(type, listener) ·½·¨
+            //  ä¸ºäº†å®ç° è·¨ frame çš„ å…¨å±€äº‹ä»¶ï¼Œæ‰€ä»¥ä½¿ç”¨ $j.addEventListener(type, listener) æ–¹æ³•
             //window.addEventListener("mouseup", window_mouseup);
             //window.addEventListener("mousemove", window_mousemove);
             $j.addEventListener("mouseup", window_mouseup);
@@ -117,7 +117,7 @@
 
         function window_mouseup() {
 
-            //  ÎªÁËÊµÏÖ ¿ç frame µÄ È«¾ÖÊÂ¼ş£¬ËùÒÔÊ¹ÓÃ $j.addEventListener(type, listener) ·½·¨
+            //  ä¸ºäº†å®ç° è·¨ frame çš„ å…¨å±€äº‹ä»¶ï¼Œæ‰€ä»¥ä½¿ç”¨ $j.addEventListener(type, listener) æ–¹æ³•
             $j.removeEventListener("mouseup", window_mouseup);
             $j.removeEventListener("mousemove", window_mousemove);
             //window.removeEventListener("mouseup", window_mouseup);
@@ -149,7 +149,7 @@
 
             _resizingDiv = null;
 
-            //  ÎªÁËÊµÏÖ ¿ç frame µÄ È«¾ÖÊÂ¼ş£¬ËùÒÔÊ¹ÓÃ $j.addEventListener(type, listener) ·½·¨
+            //  ä¸ºäº†å®ç° è·¨ frame çš„ å…¨å±€äº‹ä»¶ï¼Œæ‰€ä»¥ä½¿ç”¨ $j.addEventListener(type, listener) æ–¹æ³•
             $j.removeEventListener("mousemove", window_mousemoveForResize);
             $j.removeEventListener("mouseup", window_mouseupForResize);
             //window.removeEventListener("mousemove", window_mousemoveForResize);

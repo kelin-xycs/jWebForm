@@ -1,4 +1,4 @@
-(
+ï»¿(
     function ()
     {
         $j.RegisterControlType("J:DROPMENU", DropMenu)
@@ -28,7 +28,7 @@
 
         DropMenu.prototype.AddTopItem = function AddTopItem(topItem) {
             if (!topItem instanceof TopItem)
-                throw "²ÎÊı topItem ²»ÊÇ TopItem ¶ÔÏó£¬Ó¦Ê¹ÓÃ $j.DropMenu.TopItem() ·½·¨´´½¨ TopItem ¡£";
+                throw "å‚æ•° topItem ä¸æ˜¯ TopItem å¯¹è±¡ï¼Œåº”ä½¿ç”¨ $j.DropMenu.TopItem() æ–¹æ³•åˆ›å»º TopItem ã€‚";
 
             var elemt = this.elemt;
 
@@ -106,8 +106,8 @@
             });
 
             /* 
-             * ÓÃ jwf$AddEventHandler_To_Frames_Window_MouseDown() Ìæ»» window.addEventListener() µÄ Ô­Òò ¼û
-             * jwf$AddEventHandler_To_Frames_Window_MouseDown() ¼° Ïà¹Ø·½·¨ºÍ±äÁ¿ µÄ ×¢ÊÍ 
+             * ç”¨ jwf$AddEventHandler_To_Frames_Window_MouseDown() æ›¿æ¢ window.addEventListener() çš„ åŸå›  è§
+             * jwf$AddEventHandler_To_Frames_Window_MouseDown() åŠ ç›¸å…³æ–¹æ³•å’Œå˜é‡ çš„ æ³¨é‡Š 
              */
             //window.addEventListener("mousedown", function jwf$DropMenu$window_mousedown() {
             //    if (drop.jwfObj.mousedownSelf) {
@@ -125,7 +125,7 @@
 
         TopItem.prototype.AddSubItem = function AddSubItem(subItem) {
             if (!subItem instanceof SubItem)
-                throw "²ÎÊı subItem ²»ÊÇ SubItem ¶ÔÏó£¬Ó¦Ê¹ÓÃ $j.DropMenu.SubItem() ·½·¨´´½¨ SubItem ¡£";
+                throw "å‚æ•° subItem ä¸æ˜¯ SubItem å¯¹è±¡ï¼Œåº”ä½¿ç”¨ $j.DropMenu.SubItem() æ–¹æ³•åˆ›å»º SubItem ã€‚";
 
             var drop = this.drop;
 

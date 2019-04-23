@@ -1,4 +1,4 @@
-(
+ï»¿(
     function ()
     {
         $j.RegisterControlType("J:BUTTON", Button);
@@ -58,7 +58,7 @@
                 }
 
                 if (!handler) {
-                    throw "jWebForm Error: \"" + btn.click + "\" ²»ÊÇÓĞĞ§µÄ º¯ÊıÃû »ò º¯Êı ¡£"
+                    throw "jWebForm Error: \"" + btn.click + "\" ä¸æ˜¯æœ‰æ•ˆçš„ å‡½æ•°å æˆ– å‡½æ•° ã€‚"
                 }
 
                 handler(btn);

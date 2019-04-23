@@ -1,4 +1,4 @@
-(
+ï»¿(
     function ()
     {
         $j.RegisterControlType("J:PICTUREBOX", PictureBox);
@@ -71,7 +71,7 @@
             if (!width)
                 return this.width;
 
-            throw "jWebForm Error: Ôİ²»Ö§³Ö ÉèÖÃ Width ¡£"
+            throw "jWebForm Error: æš‚ä¸æ”¯æŒ è®¾ç½® Width ã€‚"
             //this.width = parseInt(width.replace("px", ""));
 
             //this.elemt.style.width = this.width + "px";
@@ -81,7 +81,7 @@
             if (!height)
                 return this.height;
 
-            throw "jWebForm Error: Ôİ²»Ö§³Ö ÉèÖÃ Height ¡£"
+            throw "jWebForm Error: æš‚ä¸æ”¯æŒ è®¾ç½® Height ã€‚"
             //this.height = parseInt(height.replace("px", ""));
 
             //this.elemt.style.height = this.height + "px";
