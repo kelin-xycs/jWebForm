@@ -93,6 +93,8 @@
             }
         }
 
+        $j.RegisterControl = RegisterControl;
+
         function RegisterControl(ctrl, id) {
             ctrl.id = id;
             ctrl.elemt.id = id;

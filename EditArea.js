@@ -122,7 +122,7 @@
             var ctrl = new jwf$EditArea();
 
             if (id) {
-                jwf$RegiterControl(ctrl, id);
+                $j.RegisterControl(ctrl, id);
             }
 
             return ctrl;

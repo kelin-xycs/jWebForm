@@ -59,7 +59,7 @@
             var ctrl = new PictureBox();
 
             if (id) {
-                jwf$RegiterControl(ctrl, id);
+                $j.RegisterControl(ctrl, id);
             }
 
             return ctrl;
