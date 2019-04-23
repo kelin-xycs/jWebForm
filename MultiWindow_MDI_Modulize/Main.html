@@ -26,7 +26,7 @@
 
             var topItem = $j.DropMenu.TopItem("文件");
 
-            var subItem = $j.DropMenu.SubItem("保存", function () { Cef.OpenSaveFileDialog(); });
+            var subItem = $j.DropMenu.SubItem("保存", function () { SaveFile(); });
             topItem.AddSubItem(subItem);
 
             subItem = $j.DropMenu.SubItem("aaaaaaaaaaaaaaa", function () { alert("aaaaaaaaaaaaaaa"); });
@@ -49,7 +49,7 @@
             dropMenu.AddTopItem(topItem);
         }
 
-        function SaveFile(file) {
+        function SaveFile() {
 
             var editArea = $j("EditArea1");
 
