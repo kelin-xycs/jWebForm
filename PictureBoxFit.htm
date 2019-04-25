@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>PictureBoxFit</title>
+    <link rel="stylesheet" type="text/css" href="jWebForm.css" />
+    <script type="text/javascript" src="jWebForm.js"></script>
+    <script type="text/javascript" src="PictureBoxFit.js"></script>
+    <script type="text/javascript">
+
+
+        $j.Page_Load = function Page_Load() {
+
+            var picBox1 = $j("picBox1");
+
+            picBox1.Images(
+                [
+                    "images/美女1-1.jpg",
+                    "images/美女1-2.jpg",
+                    "images/美女1-3.jpg"
+                ]
+            );
+
+            picBox1.Play();
+        }
+
+    </script>
+</head>
+<body>
+
+    每 5 秒 播放一张图片
+
+    <br /><br />
+
+    <j:PictureBoxFit id="picBox1" ></j:PictureBoxFit>
+
+</body>
+</html>
