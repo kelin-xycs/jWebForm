@@ -289,16 +289,28 @@
         {
             var elemt = this.elemt;
 
+            //  外部有可能通过 Element() 属性获取 elemt，直接对 elemt.InnerHTML 赋值来创建 DragObj 的 contentElement，这种情况就不需要通过构造函数初始化 contentElement
             if (this.contentElement)
                 elemt.appendChild(this.contentElement);
 
+            elemt.style.zIndex = _draggingZIndex;
+
+            if (_draggingDiv)
+                _draggingDiv.style.zIndex = _defaultZIndex;
+
             document.documentElement.appendChild(elemt);
+
+            this.isClosed = false;
         }
 
         DragObj.prototype.Close = function Close() {
 
+            if (this.isClosed)
+                return;
+
             document.documentElement.removeChild(this.elemt);
 
+            this.isClosed = true;
         }
 
         DragObj.prototype.NotDrag = function NotDrag(notDragElement)

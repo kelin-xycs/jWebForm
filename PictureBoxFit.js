@@ -3,34 +3,34 @@
     {
         $j.RegisterControlType("J:PICTUREBOXFIT", PictureBoxFit);
 
+        _playInterval = 5000;
+
         function PictureBoxFit(jelemt)
         {
 
-            this.playInterval = 5000;
+            //this.playInterval = 5000;
             this.stepInterval = 100;
 
+            var width;
+            var height;
 
             if (jelemt) {
-                var width = jelemt.getAttribute("Width");
-                var height = jelemt.getAttribute("Height");
+                width = jelemt.getAttribute("Width");
+                height = jelemt.getAttribute("Height");
             }
 
-            if (width)
-                this.width = width;
-            else
-                this.width = "200px";
+            if (!width)
+                width = "200px";
 
-            if (height)
-                this.height = height;
-            else
-                this.height = "300px";
+            if (!height)
+                height = "300px";
 
 
             var elemt = document.createElement("div");
 
             elemt.style.display = "inline-block";
-            elemt.style.width = this.width;
-            elemt.style.height = this.height;
+            elemt.style.width = width;
+            elemt.style.height = height;
             elemt.style.border = "solid 1px lightblue";
             elemt.style.overflow = "hidden";
 
@@ -67,27 +67,24 @@
 
             img.addEventListener("load", function () {
 
-                if (picBox.isFirstImg)
-                {
+                if (picBox.isFirstImg) {
                     picBox.isFirstImg = false;
-                    window.setTimeout(PlayOneImage, picBox.playInterval, picBox);
+                    window.setTimeout(PlayOneImage, _playInterval, picBox);
                     return;
                 }
-                    
+
                 var elemt = picBox.elemt;
                 var div0 = elemt.childNodes[0];
 
                 var div1 = elemt.childNodes[1];
 
-                console.info("div1.offsetHeight " + div1.offsetHeight);
                 div0.style.marginTop = (-1 * div1.offsetHeight) + "px";;
                 div0.style.display = "";
 
-                console.info("PlayOneImageStep " + PlayOneImageStep);
                 picBox.stepCount = 0;
                 picBox.playOneImageStepHandle = window.setInterval(PlayOneImageStep, picBox.stepInterval, picBox);
 
-            })
+            });
 
             div.appendChild(img);
 
@@ -104,14 +101,20 @@
             return ctrl;
         }
 
+        $j.PictureBoxFit.PlayInterval = function PlayInterval(playInterval)
+        {
+            if (!playInterval)
+                return _playInterval;
+
+            _playInterval = playInterval;
+        }
+
         PictureBoxFit.prototype = $j.Control();
 
         PictureBoxFit.prototype.Width = function Width(width) {
 
             if (!width)
-                return this.width;
-
-            this.width = width;
+                return this.elemt.style.width;
 
             this.elemt.style.width = width;
         }
@@ -119,9 +122,7 @@
         PictureBoxFit.prototype.Height = function Height(height) {
 
             if (!height)
-                return this.height;
-            
-            this.height = height;
+                return this.elemt.style.height;
 
             this.elemt.style.height = height;
         }
@@ -130,6 +131,9 @@
         {
             if (!urlList)
                 return this.urlList;
+
+            if (urlList.length == 0)
+                throw "urlList.length 不能为 0 。";
 
             this.currentImgIndex = 0;
 
@@ -143,6 +147,12 @@
 
         PictureBoxFit.prototype.Play = function Play()
         {
+            if (!this.urlList)
+                throw "请先设置 Images(urlList) 属性 。";
+
+            if (this.urlList.length == 0)
+                throw "this.urlList.length 不能为 0 。";
+
             var elemt = this.elemt;
 
             var div1 = elemt.childNodes[1];
@@ -199,7 +209,7 @@
                     picBox.imgIndex = 0;
                 }
 
-                window.setTimeout(PlayOneImage, picBox.playInterval, picBox);
+                window.setTimeout(PlayOneImage, _playInterval, picBox);
 
                 return;
             }
