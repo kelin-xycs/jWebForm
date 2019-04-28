@@ -298,6 +298,8 @@
             if (_draggingDiv)
                 _draggingDiv.style.zIndex = _defaultZIndex;
 
+            _draggingDiv = elemt;
+
             document.documentElement.appendChild(elemt);
 
             this.isClosed = false;

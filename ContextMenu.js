@@ -58,8 +58,8 @@
             var x = clientX + document.body.scrollLeft;
             var y = clientY + document.body.scrollTop;
 
-            elemt.style.left = x;
-            elemt.style.top = y;
+            elemt.style.left = x + "px";
+            elemt.style.top = y + "px";
 
             document.documentElement.appendChild(elemt);
 

@@ -217,5 +217,10 @@
             picBox.stepCount++;
 
         }
+
+        PictureBoxFit.prototype.CurrentImageUrl = function CurrentImageUrl()
+        {
+            return this.elemt.childNodes[1].childNodes[0].src;
+        }
     }
 )();
