@@ -54,7 +54,9 @@
         
         function draggingDiv_mousedown( ctrl )
         {
+
             
+            $j.TryGetFocus(ctrl);
 
             var e = window.event;
 
@@ -313,6 +315,8 @@
             document.documentElement.removeChild(this.elemt);
 
             this.isClosed = true;
+
+            $j.UnFocus(this);
         }
 
         DragObj.prototype.NotDrag = function NotDrag(notDragElement)

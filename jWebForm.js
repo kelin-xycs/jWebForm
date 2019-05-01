@@ -378,6 +378,47 @@
         LinkedList.prototype.Current = function Current() {
             return this.current;
         }
+
+
+        var _isFocusGot;
+        var _focusedControl;
+
+        $j.TryGetFocus = TryGetFocus;
+
+        function TryGetFocus(ctrl) {
+
+            if (_isFocusGot)
+                return;
+
+            _focusedControl = ctrl;
+            _isFocusGot = true;
+        }
+
+        $j.FocusedControl = function FocusedControl() {
+
+            if (_focusedControl)
+                return _focusedControl;
+
+            return window;
+
+        }
+
+        window.addEventListener("mousedown", function () {
+
+            TryGetFocus(window);
+
+            _isFocusGot = false;
+
+        });
+
+        $j.UnFocus = function UnFocus(ctrl)
+        {
+            if (ctrl != _focusedControl)
+                return;
+
+            _focusedControl = null;
+            _isFocusGot = false;
+        }
     }
 )();
 

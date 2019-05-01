@@ -95,6 +95,8 @@
             var text = this.text;
             var list = this.list;
 
+            list.innerHTML = "";
+
             for (var i = 0; i < dataSource.length; i++) {
                 let item = document.createElement("div");
 
@@ -154,12 +156,37 @@
             this.selectChanged = selectChanged;
         }
 
-        DropDownList.prototype.SelectedText = function SelectedText()
+        DropDownList.prototype.SelectedText = function SelectedText(text)
         {
-            if (!this.selectedItem)
-                return "";
+            if (!text)
+            {
+                if (!this.selectedItem)
+                    return null;
 
-            return this.selectedItem.innerText;
+                return this.selectedItem.innerText;
+            }
+
+
+            var item = this.list.firstChild;
+
+            if (!item)
+                return;
+
+            while (true)
+            {
+                if (item.innerText == text)
+                {
+                    this.text.innerText = text;
+                    this.selectedItem = item;
+
+                    break;
+                }
+
+                if (!item.nextSibling)
+                    break;
+
+                item = item.nextSibling;
+            }
         }
     }
 )();
